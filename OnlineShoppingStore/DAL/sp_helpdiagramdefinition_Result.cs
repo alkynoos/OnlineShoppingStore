@@ -10,15 +10,10 @@
 namespace OnlineShoppingStore.DAL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class MemberRole
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int MemberRoleID { get; set; }
-        public Nullable<int> MemberId { get; set; }
-        public Nullable<int> RoleId { get; set; }
-    
-        public virtual Members Members { get; set; }
-        public virtual Roles Roles { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

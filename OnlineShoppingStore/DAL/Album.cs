@@ -11,19 +11,29 @@ namespace OnlineShoppingStore.DAL
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Roles
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class Album
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Roles()
+        public Album()
         {
-            this.MemberRole = new HashSet<MemberRole>();
+            this.Category = new HashSet<Category>();
         }
     
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }
+        public int AlbumId { get; set; }
+        [Display(Name ="Name")]
+        public string AlbumName { get; set; }
+        [Display(Name = "Track No.")]
+        public Nullable<int> TrackNo { get; set; }
+        public string Description { get; set; }
+        [Display(Name = "Release Date")]
+        public Nullable<System.DateTime> ReleaseDate { get; set; }
+        public string Genre { get; set; }
+        public Nullable<int> ArtistId { get; set; }
     
+        public virtual Artist Artist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberRole> MemberRole { get; set; }
+        public virtual ICollection<Category> Category { get; set; }
     }
 }

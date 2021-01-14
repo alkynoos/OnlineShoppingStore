@@ -10,74 +10,187 @@ using System.Web.Mvc;
 
 namespace OnlineShoppingStore.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         public GenericUnitOfWork _unitOfWork = new GenericUnitOfWork();
 
         // GET: Admin
-        public List<SelectListItem> GetCategory()
-        {
-            List<SelectListItem> list = new List<SelectListItem>();
-            var cat = _unitOfWork.GetRepositoryInstance<Category>().GetAllRecords();
-            foreach (var item in cat)
-            {
-                list.Add(new SelectListItem { Value = item.CategoryId.ToString(), Text = item.CategoryName });
-            }
-            return list;
-        }
+
+
+        
 
         public ActionResult Dashboard()
         {
             return View();
         }
 
-        public ActionResult Categories()
-        {
-            List<Category> allCategories = _unitOfWork.GetRepositoryInstance<Category>()
-                                                      .GetAllRecordsIQueryable()
-                                                       .Where(i => i.IsDelete == false).ToList();
-            return View(allCategories);
-        }
+        #region Album
 
-        public ActionResult AddCategory()
+        public List<SelectListItem> GetAlbum()
         {
-            return UpdateCategory(0);
-        }
-
-        public ActionResult UpdateCategory(int categoryId)
-        {
-            CategoryDetail cd;
-            if (categoryId !=null)
+            List<SelectListItem> list = new List<SelectListItem>();
+            var album = _unitOfWork.GetRepositoryInstance<Album>().GetAllRecords();
+            foreach (var item in album)
             {
-                cd = JsonConvert.DeserializeObject<CategoryDetail>(JsonConvert.SerializeObject(_unitOfWork.GetRepositoryInstance<Category>().GetFirstorDefault(categoryId)));
-
+                list.Add(new SelectListItem { Value = item.AlbumId.ToString(), Text = item.AlbumName });
             }
-            else
-            {
-                cd = new CategoryDetail();
-            }
-            return View("UpdateCategory", cd);
+            return list;
         }
 
-        public ActionResult CategoryEdit(int catId)
+        
+        public ActionResult Album()
         {
-            return View(_unitOfWork.GetRepositoryInstance<Category>().GetFirstorDefault(catId));
+            
+            ViewBag.ArtistList = GetArtist();
+            return View(_unitOfWork.GetRepositoryInstance<Album>().GetProduct());
+        }
+
+        public ActionResult AlbumEdit(int albumId)
+        {
+           
+            ViewBag.ArtistList = GetArtist();
+            return View(_unitOfWork.GetRepositoryInstance<Album>().GetFirstorDefault(albumId));
+        }
+
+        [HttpPost]
+        public ActionResult AlbumEdit(Album tbl)
+        {            
+            _unitOfWork.GetRepositoryInstance<Album>().Update(tbl);
+            return RedirectToAction("Album");
+        }
+
+        public ActionResult AlbumAdd()
+        {
+
+            ViewBag.ArtistList = GetArtist();
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult AlbumAdd(Album tbl)
+        {
+
+            _unitOfWork.GetRepositoryInstance<Album>().Add(tbl);
+            return RedirectToAction("Album");
+        }
+
+
+        #endregion
+
+        #region Category 
+
+        public List<SelectListItem> GetCategory()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            var category = _unitOfWork.GetRepositoryInstance<Category>().GetAllRecords();
+            foreach (var item in category)
+            {
+                list.Add(new SelectListItem { Value = item.CategoryId.ToString(), Text = item.CategoryName });
+            }
+            return list;
+        }
+
+        public ActionResult Category()
+        {
+            return View(_unitOfWork.GetRepositoryInstance<Category>().GetProduct());
+        }
+
+        public ActionResult CategoryEdit(int categoryId)
+        {
+            //ViewBag.AlbumList = GetAlbum();   uncomment when album is created
+            ViewBag.ArtistList = GetArtist();
+            return View(_unitOfWork.GetRepositoryInstance<Category>().GetFirstorDefault(categoryId));
         }
 
         [HttpPost]
         public ActionResult CategoryEdit(Category tbl)
-        {            
+        {
+           
+            //tbl.ModifiedDate = DateTime.Now;
             _unitOfWork.GetRepositoryInstance<Category>().Update(tbl);
-            return RedirectToAction("Categories");
+            return RedirectToAction("Category");
         }
+
+        public ActionResult CategoryAdd()
+        {          
+
+            ViewBag.ArtistList = GetArtist();
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult CategoryAdd(Category tbl)
+        {           
+            
+            _unitOfWork.GetRepositoryInstance<Category>().Add(tbl);
+            return RedirectToAction("Category");
+        }
+
+        #endregion
+
+        #region Artist
+                
+
+        public List<SelectListItem> GetArtist()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            var artist = _unitOfWork.GetRepositoryInstance<Artist>().GetAllRecords();
+            foreach (var item in artist)
+            {
+                list.Add(new SelectListItem { Value = item.ArtistId.ToString(), Text = item.Name });
+            }
+            return list;
+        }
+
+        public ActionResult Artist()
+        {
+            return View(_unitOfWork.GetRepositoryInstance<Artist>().GetProduct());
+        }
+
+        public ActionResult ArtistEdit(int artistId)
+        {
+            ViewBag.ArtistList = GetArtist();
+            return View(_unitOfWork.GetRepositoryInstance<Artist>().GetFirstorDefault(artistId));
+        }
+
+        [HttpPost]
+        public ActionResult ArtistEdit(Artist tbl)
+        {            
+
+            //tbl.ModifiedDate = DateTime.Now;
+            _unitOfWork.GetRepositoryInstance<Artist>().Update(tbl);
+            return RedirectToAction("Artist");
+        }
+
+        public ActionResult ArtistAdd()
+        {
+            //check if it is needed
+            ViewBag.ArtistList = GetArtist();
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult ArtistAdd(Artist tbl)
+        {            
+            //tbl.CreatedDate = DateTime.Now;
+            _unitOfWork.GetRepositoryInstance<Artist>().Add(tbl);
+            return RedirectToAction("Artist");
+        }
+
+        #endregion
+
+
+        #region Products
 
         public ActionResult Product()
         {
             return View(_unitOfWork.GetRepositoryInstance<Product>().GetProduct());
         }
-        
-        
+
         public ActionResult ProductEdit(int productId)
         {
             ViewBag.CategoryList = GetCategory();
@@ -108,6 +221,7 @@ namespace OnlineShoppingStore.Controllers
             return View();
         }
 
+
         [HttpPost]
         public ActionResult ProductAdd(Product tbl, HttpPostedFileBase file)
         {
@@ -124,6 +238,8 @@ namespace OnlineShoppingStore.Controllers
             _unitOfWork.GetRepositoryInstance<Product>().Add(tbl);
             return RedirectToAction("Product");
         }
+
+        #endregion
     }
 
 }

@@ -12,13 +12,12 @@ namespace OnlineShoppingStore.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class MemberRole
+    public partial class sysdiagrams
     {
-        public int MemberRoleID { get; set; }
-        public Nullable<int> MemberId { get; set; }
-        public Nullable<int> RoleId { get; set; }
-    
-        public virtual Members Members { get; set; }
-        public virtual Roles Roles { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

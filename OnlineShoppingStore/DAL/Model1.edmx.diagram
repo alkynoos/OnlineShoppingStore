@@ -5,19 +5,28 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6d5502e22f2b46d699020e0ec67f99c9" Name="Diagram1">
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Cart" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.CartStatus" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Category" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.MemberRole" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Members" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Roles" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.ShippingDetails" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.SlideImage" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
-        <AssociationConnector Association="dbMyOnlineShoppingModel.FK__ShippingD__Payme__30F848ED" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Product" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Cart" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.CartStatus" Width="1.5" PointX="0.75" PointY="7.875" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.MemberRole" Width="1.5" PointX="3" PointY="4.5" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Members" Width="1.5" PointX="0.75" PointY="4" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Roles" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.ShippingDetails" Width="1.5" PointX="5.25" PointY="7" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Cart_CartStatus" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Cart_Members" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_ShippingDetails_Cart" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_MemberRole_Members" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_MemberRole_Roles" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Album" Width="1.5" PointX="3" PointY="18.875" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Artist" Width="1.5" PointX="0.75" PointY="17" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Category" Width="1.5" PointX="3" PointY="14.875" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Product" Width="1.5" PointX="3" PointY="10.375" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.SlideImage" Width="1.5" PointX="7.625" PointY="0.75" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Album_Artist" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Category_Album" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Category_Artist" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK__Cart__CartStatus__36B12243" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
