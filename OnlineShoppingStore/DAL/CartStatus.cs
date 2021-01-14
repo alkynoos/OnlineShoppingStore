@@ -14,7 +14,16 @@ namespace OnlineShoppingStore.DAL
     
     public partial class CartStatus
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CartStatus()
+        {
+            this.Cart = new HashSet<Cart>();
+        }
+    
         public int CartStatusId { get; set; }
         public string CartStatus1 { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Cart { get; set; }
     }
 }

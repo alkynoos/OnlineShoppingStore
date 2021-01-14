@@ -1,0 +1,76 @@
+﻿@model List<OnlineShoppingStore.DAL.Album>
+
+@{
+    ViewBag.Title = "Album";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Album</li>
+</ol>
+<!-- DataTables Example -->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-table"></i>
+        Category Details
+        <a href="../Admin/AlbumAdd" class="btn btn-info pull-right fa fa-plus"> Add New</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Name</th>
+                        <th>Artist</th>
+                        <th>Genre</th>
+                        <th>Track No.</th>
+                        <th>Release Date</th>
+                        <th>Description</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Name</th>
+                        <th>Artist</th>                        
+                        <th>Genre</th>
+                        <th>Track No.</th>
+                        <th>Release Date</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>@(Model.IndexOf(item)+1)</td>
+                            <td>@item.AlbumName</td>
+                            <td>@item.Artist.Name</td>                        
+                            <td>@item.Genre</td>
+                            <td>@item.TrackNo</td>
+                            <td>@item.ReleaseDate</td>
+                            <td>@item.Description</td>
+
+                            <td>
+                                @Html.ActionLink("Edit", "AlbumEdit", new { albumId = item.AlbumId })
+                            </td>
+
+
+                        </tr>
+                        }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+

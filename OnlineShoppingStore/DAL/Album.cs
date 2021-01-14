@@ -12,13 +12,16 @@ namespace OnlineShoppingStore.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class MemberRole
+    public partial class Album
     {
-        public int MemberRoleID { get; set; }
-        public Nullable<int> MemberId { get; set; }
-        public Nullable<int> RoleId { get; set; }
+        public int AlbumId { get; set; }
+        public string AlbumName { get; set; }
+        public Nullable<int> TrackNo { get; set; }
+        public string Description { get; set; }
+        public Nullable<System.DateTime> ReleaseDate { get; set; }
+        public string Genre { get; set; }
+        public Nullable<int> ArtistId { get; set; }
     
-        public virtual Members Members { get; set; }
-        public virtual Roles Roles { get; set; }
+        public virtual Artist Artist { get; set; }
     }
 }

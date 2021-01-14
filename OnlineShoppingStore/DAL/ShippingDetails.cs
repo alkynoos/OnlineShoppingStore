@@ -15,7 +15,6 @@ namespace OnlineShoppingStore.DAL
     public partial class ShippingDetails
     {
         public int ShippingDetailId { get; set; }
-        public Nullable<int> MemberId { get; set; }
         public string Adress { get; set; }
         public string City { get; set; }
         public string State { get; set; }
@@ -24,7 +23,11 @@ namespace OnlineShoppingStore.DAL
         public Nullable<int> OrderId { get; set; }
         public Nullable<decimal> AmountPaid { get; set; }
         public string PaymentType { get; set; }
+        public int CartId { get; set; }
+        public string Email { get; set; }
+        public byte[] Phone { get; set; }
+        public byte[] MobilePhone { get; set; }
     
-        public virtual Members Members { get; set; }
+        public virtual Cart Cart { get; set; }
     }
 }

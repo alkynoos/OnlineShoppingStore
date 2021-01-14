@@ -14,11 +14,21 @@ namespace OnlineShoppingStore.DAL
     
     public partial class Cart
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Cart()
+        {
+            this.ShippingDetails = new HashSet<ShippingDetails>();
+        }
+    
         public int CartId { get; set; }
         public Nullable<int> ProductId { get; set; }
         public Nullable<int> MemberId { get; set; }
         public Nullable<int> CartStatusId { get; set; }
     
         public virtual Product Product { get; set; }
+        public virtual CartStatus CartStatus { get; set; }
+        public virtual Members Members { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ShippingDetails> ShippingDetails { get; set; }
     }
 }
