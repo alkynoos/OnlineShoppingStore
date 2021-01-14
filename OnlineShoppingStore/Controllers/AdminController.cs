@@ -42,7 +42,7 @@ namespace OnlineShoppingStore.Controllers
         public ActionResult Album()
         {
             
-            ViewBag.ArtistList = GetArtist();
+            //ViewBag.ArtistList = GetArtist();
             return View(_unitOfWork.GetRepositoryInstance<Album>().GetProduct());
         }
 
@@ -99,7 +99,7 @@ namespace OnlineShoppingStore.Controllers
 
         public ActionResult CategoryEdit(int categoryId)
         {
-            //ViewBag.AlbumList = GetAlbum();   uncomment when album is created
+            
             ViewBag.ArtistList = GetArtist();
             return View(_unitOfWork.GetRepositoryInstance<Category>().GetFirstorDefault(categoryId));
         }
@@ -116,15 +116,15 @@ namespace OnlineShoppingStore.Controllers
         public ActionResult CategoryAdd()
         {          
 
-            ViewBag.ArtistList = GetArtist();
+            
             return View();
         }
 
 
         [HttpPost]
         public ActionResult CategoryAdd(Category tbl)
-        {           
-            
+        {
+            tbl.IsActive = true;
             _unitOfWork.GetRepositoryInstance<Category>().Add(tbl);
             return RedirectToAction("Category");
         }
@@ -175,8 +175,10 @@ namespace OnlineShoppingStore.Controllers
 
         [HttpPost]
         public ActionResult ArtistAdd(Artist tbl)
-        {            
+        {
             //tbl.CreatedDate = DateTime.Now;
+            //tbl.IsActive = true;
+            //tbl.IsDelete = false;
             _unitOfWork.GetRepositoryInstance<Artist>().Add(tbl);
             return RedirectToAction("Artist");
         }
@@ -193,6 +195,7 @@ namespace OnlineShoppingStore.Controllers
 
         public ActionResult ProductEdit(int productId)
         {
+            ViewBag.ArtistList = GetArtist();
             ViewBag.CategoryList = GetCategory();
             return View(_unitOfWork.GetRepositoryInstance<Product>().GetFirstorDefault(productId));
         }
@@ -217,6 +220,7 @@ namespace OnlineShoppingStore.Controllers
         
         public ActionResult ProductAdd()
         {
+            ViewBag.ArtistList = GetArtist();
             ViewBag.CategoryList = GetCategory();
             return View();
         }

@@ -14,7 +14,7 @@
           <Property Name="TrackNo" Type="int" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="ReleaseDate" Type="date" />
-          <Property Name="Genre" Type="varchar" MaxLength="100" />
+          <Property Name="Genre" Type="varchar(max)" />
           <Property Name="ArtistId" Type="int" />
         </EntityType>
         <EntityType Name="Artist">
@@ -22,11 +22,9 @@
             <PropertyRef Name="ArtistId" />
           </Key>
           <Property Name="ArtistId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Genre" Type="varchar" MaxLength="100" />
+          <Property Name="Genre" Type="varchar(max)" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Country" Type="varchar" MaxLength="100" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="IsDelete" Type="bit" />
         </EntityType>
         <EntityType Name="Cart">
           <Key>
@@ -52,8 +50,6 @@
           <Property Name="CategoryName" Type="varchar" MaxLength="500" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="IsDelete" Type="bit" />
-          <Property Name="AlbumId" Type="int" />
-          <Property Name="ArtistId" Type="int" />
         </EntityType>
         <EntityType Name="MemberRole">
           <Key>
@@ -84,6 +80,7 @@
           <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="varchar" MaxLength="500" />
           <Property Name="CategoryId" Type="int" />
+          <Property Name="ArtistId" Type="int" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -197,30 +194,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Category_Album">
-          <End Role="Album" Type="Self.Album" Multiplicity="0..1" />
-          <End Role="Category" Type="Self.Category" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Album">
-              <PropertyRef Name="AlbumId" />
-            </Principal>
-            <Dependent Role="Category">
-              <PropertyRef Name="AlbumId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Category_Artist">
-          <End Role="Artist" Type="Self.Artist" Multiplicity="0..1" />
-          <End Role="Category" Type="Self.Category" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Artist">
-              <PropertyRef Name="ArtistId" />
-            </Principal>
-            <Dependent Role="Category">
-              <PropertyRef Name="ArtistId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MemberRole_Members">
           <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
           <End Role="MemberRole" Type="Self.MemberRole" Multiplicity="*" />
@@ -242,6 +215,18 @@
             </Principal>
             <Dependent Role="MemberRole">
               <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Artist">
+          <End Role="Artist" Type="Self.Artist" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="ArtistId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ArtistId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -324,14 +309,6 @@
             <End Role="Members" EntitySet="Members" />
             <End Role="Cart" EntitySet="Cart" />
           </AssociationSet>
-          <AssociationSet Name="FK_Category_Album" Association="Self.FK_Category_Album">
-            <End Role="Album" EntitySet="Album" />
-            <End Role="Category" EntitySet="Category" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Category_Artist" Association="Self.FK_Category_Artist">
-            <End Role="Artist" EntitySet="Artist" />
-            <End Role="Category" EntitySet="Category" />
-          </AssociationSet>
           <AssociationSet Name="FK_MemberRole_Members" Association="Self.FK_MemberRole_Members">
             <End Role="Members" EntitySet="Members" />
             <End Role="MemberRole" EntitySet="MemberRole" />
@@ -339,6 +316,10 @@
           <AssociationSet Name="FK_MemberRole_Roles" Association="Self.FK_MemberRole_Roles">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="MemberRole" EntitySet="MemberRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Artist" Association="Self.FK_Product_Artist">
+            <End Role="Artist" EntitySet="Artist" />
+            <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="FK_ShippingDetails_Cart" Association="Self.FK_ShippingDetails_Cart">
             <End Role="Cart" EntitySet="Cart" />
@@ -386,10 +367,17 @@
           <FunctionImport Name="sp_upgraddiagrams" />
           <EntitySet Name="Cart" EntityType="dbMyOnlineShoppingModel.Cart" />
           <EntitySet Name="CartStatus" EntityType="dbMyOnlineShoppingModel.CartStatus" />
+          <EntitySet Name="Category" EntityType="dbMyOnlineShoppingModel.Category" />
           <EntitySet Name="MemberRole" EntityType="dbMyOnlineShoppingModel.MemberRole" />
           <EntitySet Name="Members" EntityType="dbMyOnlineShoppingModel.Members" />
+          <EntitySet Name="Product" EntityType="dbMyOnlineShoppingModel.Product" />
           <EntitySet Name="Roles" EntityType="dbMyOnlineShoppingModel.Roles" />
           <EntitySet Name="ShippingDetails" EntityType="dbMyOnlineShoppingModel.ShippingDetails" />
+          <EntitySet Name="SlideImage" EntityType="dbMyOnlineShoppingModel.SlideImage" />
+          <AssociationSet Name="FK__Cart__CartStatus__36B12243" Association="dbMyOnlineShoppingModel.FK__Cart__CartStatus__36B12243">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
           <AssociationSet Name="FK_Cart_CartStatus" Association="dbMyOnlineShoppingModel.FK_Cart_CartStatus">
             <End Role="CartStatus" EntitySet="CartStatus" />
             <End Role="Cart" EntitySet="Cart" />
@@ -402,6 +390,10 @@
             <End Role="Cart" EntitySet="Cart" />
             <End Role="ShippingDetails" EntitySet="ShippingDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK__Product__Quantit__286302EC" Association="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
           <AssociationSet Name="FK_MemberRole_Members" Association="dbMyOnlineShoppingModel.FK_MemberRole_Members">
             <End Role="Members" EntitySet="Members" />
             <End Role="MemberRole" EntitySet="MemberRole" />
@@ -412,27 +404,12 @@
           </AssociationSet>
           <EntitySet Name="Album" EntityType="dbMyOnlineShoppingModel.Album" />
           <EntitySet Name="Artist" EntityType="dbMyOnlineShoppingModel.Artist" />
-          <EntitySet Name="Category" EntityType="dbMyOnlineShoppingModel.Category" />
-          <EntitySet Name="Product" EntityType="dbMyOnlineShoppingModel.Product" />
-          <EntitySet Name="SlideImage" EntityType="dbMyOnlineShoppingModel.SlideImage" />
           <AssociationSet Name="FK_Album_Artist" Association="dbMyOnlineShoppingModel.FK_Album_Artist">
             <End Role="Artist" EntitySet="Artist" />
             <End Role="Album" EntitySet="Album" />
           </AssociationSet>
-          <AssociationSet Name="FK_Category_Album" Association="dbMyOnlineShoppingModel.FK_Category_Album">
-            <End Role="Album" EntitySet="Album" />
-            <End Role="Category" EntitySet="Category" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Category_Artist" Association="dbMyOnlineShoppingModel.FK_Category_Artist">
+          <AssociationSet Name="FK_Product_Artist" Association="dbMyOnlineShoppingModel.FK_Product_Artist">
             <End Role="Artist" EntitySet="Artist" />
-            <End Role="Category" EntitySet="Category" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Cart__CartStatus__36B12243" Association="dbMyOnlineShoppingModel.FK__Cart__CartStatus__36B12243">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Product__Quantit__286302EC" Association="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC">
-            <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           </EntityContainer>
@@ -484,10 +461,10 @@
           <Property Name="ProductId" Type="Int32" />
           <Property Name="MemberId" Type="Int32" />
           <Property Name="CartStatusId" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="dbMyOnlineShoppingModel.FK__Cart__CartStatus__36B12243" FromRole="Cart" ToRole="Product" />
           <NavigationProperty Name="CartStatus" Relationship="dbMyOnlineShoppingModel.FK_Cart_CartStatus" FromRole="Cart" ToRole="CartStatus" />
           <NavigationProperty Name="Members" Relationship="dbMyOnlineShoppingModel.FK_Cart_Members" FromRole="Cart" ToRole="Members" />
           <NavigationProperty Name="ShippingDetails" Relationship="dbMyOnlineShoppingModel.FK_ShippingDetails_Cart" FromRole="Cart" ToRole="ShippingDetails" />
-          <NavigationProperty Name="Product" Relationship="dbMyOnlineShoppingModel.FK__Cart__CartStatus__36B12243" FromRole="Cart" ToRole="Product" />
         </EntityType>
         <EntityType Name="CartStatus">
           <Key>
@@ -496,6 +473,16 @@
           <Property Name="CartStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CartStatus1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Cart" Relationship="dbMyOnlineShoppingModel.FK_Cart_CartStatus" FromRole="CartStatus" ToRole="Cart" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <NavigationProperty Name="Product" Relationship="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" FromRole="Category" ToRole="Product" />
         </EntityType>
         <EntityType Name="MemberRole">
           <Key>
@@ -522,6 +509,27 @@
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Cart" Relationship="dbMyOnlineShoppingModel.FK_Cart_Members" FromRole="Members" ToRole="Cart" />
           <NavigationProperty Name="MemberRole" Relationship="dbMyOnlineShoppingModel.FK_MemberRole_Members" FromRole="Members" ToRole="MemberRole" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="ArtistId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProductImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsFeatured" Type="Boolean" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Cart" Relationship="dbMyOnlineShoppingModel.FK__Cart__CartStatus__36B12243" FromRole="Product" ToRole="Cart" />
+          <NavigationProperty Name="Category" Relationship="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Artist" Relationship="dbMyOnlineShoppingModel.FK_Product_Artist" FromRole="Product" ToRole="Artist" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -550,6 +558,26 @@
           <Property Name="MobilePhone" Type="Binary" MaxLength="50" FixedLength="false" />
           <NavigationProperty Name="Cart" Relationship="dbMyOnlineShoppingModel.FK_ShippingDetails_Cart" FromRole="ShippingDetails" ToRole="Cart" />
         </EntityType>
+        <EntityType Name="SlideImage">
+          <Key>
+            <PropertyRef Name="SlideId" />
+          </Key>
+          <Property Name="SlideId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SlideTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SlideImage1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__Cart__CartStatus__36B12243">
+          <End Type="dbMyOnlineShoppingModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="dbMyOnlineShoppingModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Cart_CartStatus">
           <End Type="dbMyOnlineShoppingModel.CartStatus" Role="CartStatus" Multiplicity="0..1" />
           <End Type="dbMyOnlineShoppingModel.Cart" Role="Cart" Multiplicity="*" />
@@ -586,6 +614,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Product__Quantit__286302EC">
+          <End Type="dbMyOnlineShoppingModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="dbMyOnlineShoppingModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MemberRole_Members">
           <End Type="dbMyOnlineShoppingModel.Members" Role="Members" Multiplicity="0..1" />
           <End Type="dbMyOnlineShoppingModel.MemberRole" Role="MemberRole" Multiplicity="*" />
@@ -619,64 +659,20 @@
           <Property Name="TrackNo" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ReleaseDate" Type="DateTime" Precision="0" />
-          <Property Name="Genre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Genre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ArtistId" Type="Int32" />
           <NavigationProperty Name="Artist" Relationship="dbMyOnlineShoppingModel.FK_Album_Artist" FromRole="Album" ToRole="Artist" />
-          <NavigationProperty Name="Category" Relationship="dbMyOnlineShoppingModel.FK_Category_Album" FromRole="Album" ToRole="Category" />
         </EntityType>
         <EntityType Name="Artist">
           <Key>
             <PropertyRef Name="ArtistId" />
           </Key>
           <Property Name="ArtistId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Genre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Genre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
           <NavigationProperty Name="Album" Relationship="dbMyOnlineShoppingModel.FK_Album_Artist" FromRole="Artist" ToRole="Album" />
-          <NavigationProperty Name="Category" Relationship="dbMyOnlineShoppingModel.FK_Category_Artist" FromRole="Artist" ToRole="Category" />
-        </EntityType>
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="CategoryId" />
-          </Key>
-          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="AlbumId" Type="Int32" />
-          <Property Name="ArtistId" Type="Int32" />
-          <NavigationProperty Name="Album" Relationship="dbMyOnlineShoppingModel.FK_Category_Album" FromRole="Category" ToRole="Album" />
-          <NavigationProperty Name="Artist" Relationship="dbMyOnlineShoppingModel.FK_Category_Artist" FromRole="Category" ToRole="Artist" />
-          <NavigationProperty Name="Product" Relationship="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" FromRole="Category" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ProductId" />
-          </Key>
-          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="CategoryId" Type="Int32" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsDelete" Type="Boolean" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ProductImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IsFeatured" Type="Boolean" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
-          <NavigationProperty Name="Cart" Relationship="dbMyOnlineShoppingModel.FK__Cart__CartStatus__36B12243" FromRole="Product" ToRole="Cart" />
-          <NavigationProperty Name="Category" Relationship="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" FromRole="Product" ToRole="Category" />
-        </EntityType>
-        <EntityType Name="SlideImage">
-          <Key>
-            <PropertyRef Name="SlideId" />
-          </Key>
-          <Property Name="SlideId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SlideTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="SlideImage1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Product" Relationship="dbMyOnlineShoppingModel.FK_Product_Artist" FromRole="Artist" ToRole="Product" />
         </EntityType>
         <Association Name="FK_Album_Artist">
           <End Type="dbMyOnlineShoppingModel.Artist" Role="Artist" Multiplicity="0..1" />
@@ -690,51 +686,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Category_Album">
-          <End Type="dbMyOnlineShoppingModel.Album" Role="Album" Multiplicity="0..1" />
-          <End Type="dbMyOnlineShoppingModel.Category" Role="Category" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Album">
-              <PropertyRef Name="AlbumId" />
-            </Principal>
-            <Dependent Role="Category">
-              <PropertyRef Name="AlbumId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Category_Artist">
+        <Association Name="FK_Product_Artist">
           <End Type="dbMyOnlineShoppingModel.Artist" Role="Artist" Multiplicity="0..1" />
-          <End Type="dbMyOnlineShoppingModel.Category" Role="Category" Multiplicity="*" />
+          <End Type="dbMyOnlineShoppingModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artist">
               <PropertyRef Name="ArtistId" />
             </Principal>
-            <Dependent Role="Category">
-              <PropertyRef Name="ArtistId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Cart__CartStatus__36B12243">
-          <End Type="dbMyOnlineShoppingModel.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="dbMyOnlineShoppingModel.Cart" Role="Cart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="Cart">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Product__Quantit__286302EC">
-          <End Type="dbMyOnlineShoppingModel.Category" Role="Category" Multiplicity="0..1" />
-          <End Type="dbMyOnlineShoppingModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="CategoryId" />
-            </Principal>
             <Dependent Role="Product">
-              <PropertyRef Name="CategoryId" />
+              <PropertyRef Name="ArtistId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -820,6 +780,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="MemberRole">
             <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.MemberRole">
               <MappingFragment StoreEntitySet="MemberRole">
@@ -841,6 +811,25 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FristName" ColumnName="FristName" />
                 <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -871,6 +860,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SlideImage">
+            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.SlideImage">
+              <MappingFragment StoreEntitySet="SlideImage">
+                <ScalarProperty Name="SlideImage1" ColumnName="SlideImage" />
+                <ScalarProperty Name="SlideTitle" ColumnName="SlideTitle" />
+                <ScalarProperty Name="SlideId" ColumnName="SlideId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Album">
             <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Album">
               <MappingFragment StoreEntitySet="Album">
@@ -887,51 +885,10 @@
           <EntitySetMapping Name="Artist">
             <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Artist">
               <MappingFragment StoreEntitySet="Artist">
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Genre" ColumnName="Genre" />
                 <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Category">
-            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Category">
-              <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
-                <ScalarProperty Name="AlbumId" ColumnName="AlbumId" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Product">
-            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
-                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SlideImage">
-            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.SlideImage">
-              <MappingFragment StoreEntitySet="SlideImage">
-                <ScalarProperty Name="SlideImage1" ColumnName="SlideImage" />
-                <ScalarProperty Name="SlideTitle" ColumnName="SlideTitle" />
-                <ScalarProperty Name="SlideId" ColumnName="SlideId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
