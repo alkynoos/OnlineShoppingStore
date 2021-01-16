@@ -24,7 +24,11 @@ namespace OnlineShoppingStore.DAL
         public string CategoryName { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }
+        public Nullable<int> AlbumId { get; set; }
+        public Nullable<int> ArtistId { get; set; }
     
+        public virtual Album Album { get; set; }
+        public virtual Artist Artist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Product { get; set; }
     }

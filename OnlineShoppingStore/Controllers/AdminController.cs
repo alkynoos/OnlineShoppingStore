@@ -5,6 +5,7 @@ using OnlineShoppingStore.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -76,63 +77,37 @@ namespace OnlineShoppingStore.Controllers
             return RedirectToAction("Album");
         }
 
-
-        #endregion
-
-        #region Category 
-
-        public List<SelectListItem> GetCategory()
+        public ActionResult DeleteAlbum(int? albumId)
         {
-            List<SelectListItem> list = new List<SelectListItem>();
-            var category = _unitOfWork.GetRepositoryInstance<Category>().GetAllRecords();
-            foreach (var item in category)
+            if (albumId == null)
             {
-                list.Add(new SelectListItem { Value = item.CategoryId.ToString(), Text = item.CategoryName });
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return list;
+            Album album = _unitOfWork.GetRepositoryInstance<Album>().GetFirstorDefault(albumId);
+
+            if (album == null)
+            {
+                return HttpNotFound();
+            }
+            return View(album);
         }
 
-        public ActionResult Category()
+        [HttpPost, ActionName("DeleteAlbum")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAlbumConfirmed(int albumId)
         {
-            return View(_unitOfWork.GetRepositoryInstance<Category>().GetProduct());
-        }
-
-        public ActionResult CategoryEdit(int categoryId)
-        {
-            
-            ViewBag.ArtistList = GetArtist();
-            return View(_unitOfWork.GetRepositoryInstance<Category>().GetFirstorDefault(categoryId));
-        }
-
-        [HttpPost]
-        public ActionResult CategoryEdit(Category tbl)
-        {
-           
-            //tbl.ModifiedDate = DateTime.Now;
-            _unitOfWork.GetRepositoryInstance<Category>().Update(tbl);
-            return RedirectToAction("Category");
-        }
-
-        public ActionResult CategoryAdd()
-        {          
-
-            
-            return View();
+            Album album = _unitOfWork.GetRepositoryInstance<Album>().GetFirstorDefault(albumId);
+            _unitOfWork.GetRepositoryInstance<Album>().Remove(album);
+            _unitOfWork.SaveChanges();
+            return RedirectToAction("Album");
         }
 
 
-        [HttpPost]
-        public ActionResult CategoryAdd(Category tbl)
-        {
-            tbl.IsActive = true;
-            _unitOfWork.GetRepositoryInstance<Category>().Add(tbl);
-            return RedirectToAction("Category");
-        }
 
         #endregion
 
         #region Artist
-                
+
 
         public List<SelectListItem> GetArtist()
         {
@@ -177,25 +152,136 @@ namespace OnlineShoppingStore.Controllers
         public ActionResult ArtistAdd(Artist tbl)
         {
             //tbl.CreatedDate = DateTime.Now;
-            //tbl.IsActive = true;
-            //tbl.IsDelete = false;
+            
             _unitOfWork.GetRepositoryInstance<Artist>().Add(tbl);
             return RedirectToAction("Artist");
         }
+
+        public ActionResult DeleteArtist(int? artistId)
+        {
+            if (artistId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Artist artist = _unitOfWork.GetRepositoryInstance<Artist>().GetFirstorDefault(artistId);
+
+            if (artist == null)
+            {
+                return HttpNotFound();
+            }
+            return View(artist);
+        }
+
+        [HttpPost, ActionName("DeleteArtist")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteArtistConfirmed(int artistId)
+        {
+            Artist artist = _unitOfWork.GetRepositoryInstance<Artist>().GetFirstorDefault(artistId);
+            _unitOfWork.GetRepositoryInstance<Artist>().Remove(artist);
+            _unitOfWork.SaveChanges();
+            return RedirectToAction("Artist");
+        }
+
+        #endregion
+
+        
+
+        #region Category 
+
+        public List<SelectListItem> GetCategory()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            var category = _unitOfWork.GetRepositoryInstance<Category>().GetAllRecords();
+            foreach (var item in category)
+            {
+                list.Add(new SelectListItem { Value = item.CategoryId.ToString(), Text = item.CategoryName });
+            }
+            return list;
+        }
+
+        public ActionResult Category()
+        {
+            return View(_unitOfWork.GetRepositoryInstance<Category>().GetProduct());
+        }
+
+        public ActionResult CategoryEdit(int categoryId)
+        {
+
+            ViewBag.ArtistList = GetArtist();
+            return View(_unitOfWork.GetRepositoryInstance<Category>().GetFirstorDefault(categoryId));
+        }
+
+        [HttpPost]
+        public ActionResult CategoryEdit(Category tbl)
+        {
+
+            //tbl.ModifiedDate = DateTime.Now;
+            _unitOfWork.GetRepositoryInstance<Category>().Update(tbl);
+            return RedirectToAction("Category");
+        }
+
+        public ActionResult CategoryAdd()
+        {
+
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult CategoryAdd(Category tbl)
+        {
+            tbl.IsActive = true;
+            _unitOfWork.GetRepositoryInstance<Category>().Add(tbl);
+            return RedirectToAction("Category");
+        }
+
+        public ActionResult DeleteCategory(int? categoryId)
+        {
+            if (categoryId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Category category = _unitOfWork.GetRepositoryInstance<Category>().GetFirstorDefault(categoryId);
+
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+            return View(category);
+        }
+
+        [HttpPost, ActionName("DeleteCategory")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteCategoryConfirmed(int categoryId)
+        {
+            Category category = _unitOfWork.GetRepositoryInstance<Category>().GetFirstorDefault(categoryId);
+            _unitOfWork.GetRepositoryInstance<Category>().Remove(category);
+            _unitOfWork.SaveChanges();
+            return RedirectToAction("Category");
+        }
+
 
         #endregion
 
 
         #region Products
 
+
+
         public ActionResult Product()
         {
+            ViewBag.AlbumList = GetAlbum();
+
+            
+            
             return View(_unitOfWork.GetRepositoryInstance<Product>().GetProduct());
         }
 
         public ActionResult ProductEdit(int productId)
         {
             ViewBag.ArtistList = GetArtist();
+            ViewBag.AlbumList = GetAlbum();
             ViewBag.CategoryList = GetCategory();
             return View(_unitOfWork.GetRepositoryInstance<Product>().GetFirstorDefault(productId));
         }
@@ -221,6 +307,7 @@ namespace OnlineShoppingStore.Controllers
         public ActionResult ProductAdd()
         {
             ViewBag.ArtistList = GetArtist();
+            ViewBag.AlbumList = GetAlbum();
             ViewBag.CategoryList = GetCategory();
             return View();
         }
@@ -243,7 +330,41 @@ namespace OnlineShoppingStore.Controllers
             return RedirectToAction("Product");
         }
 
+        public ActionResult DeleteProduct(int? productId)
+        {
+            if (productId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = _unitOfWork.GetRepositoryInstance<Product>().GetFirstorDefault(productId);
+
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+
+        [HttpPost, ActionName("DeleteProduct")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteProductConfirmed(int productId)
+        {
+            Product product = _unitOfWork.GetRepositoryInstance<Product>().GetFirstorDefault(productId);
+            _unitOfWork.GetRepositoryInstance<Product>().Remove(product);
+            _unitOfWork.SaveChanges();
+            return RedirectToAction("Product");
+        }
+
         #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _unitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 
 }

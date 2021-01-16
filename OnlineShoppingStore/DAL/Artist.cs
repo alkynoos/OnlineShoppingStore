@@ -18,17 +18,19 @@ namespace OnlineShoppingStore.DAL
         public Artist()
         {
             this.Album = new HashSet<Album>();
-            this.Product = new HashSet<Product>();
+            this.Category = new HashSet<Category>();
         }
     
         public int ArtistId { get; set; }
         public string Genre { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Album> Album { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Product { get; set; }
+        public virtual ICollection<Category> Category { get; set; }
     }
 }

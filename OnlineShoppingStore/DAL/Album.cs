@@ -14,6 +14,12 @@ namespace OnlineShoppingStore.DAL
     
     public partial class Album
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Album()
+        {
+            this.Category = new HashSet<Category>();
+        }
+    
         public int AlbumId { get; set; }
         public string AlbumName { get; set; }
         public Nullable<int> TrackNo { get; set; }
@@ -23,5 +29,7 @@ namespace OnlineShoppingStore.DAL
         public Nullable<int> ArtistId { get; set; }
     
         public virtual Artist Artist { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Category> Category { get; set; }
     }
 }

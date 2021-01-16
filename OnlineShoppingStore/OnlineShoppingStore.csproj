@@ -186,7 +186,9 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\ShoppingCartItemController.cs" />
     <Compile Include="DAL\Album.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -226,6 +228,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Order.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\OrderDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -254,6 +262,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArtistDetails.cs" />
     <Compile Include="Models\CategoryDetail.cs" />
+    <Compile Include="Models\Home\CartCount.cs" />
     <Compile Include="Models\Home\HomeIndexViewModel.cs" />
     <Compile Include="Models\Home\Item.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -1851,6 +1860,14 @@
     <Content Include="Views\Admin\Album.cshtml" />
     <Content Include="Views\Admin\AlbumAdd.cshtml" />
     <Content Include="Views\Admin\AlbumEdit.cshtml" />
+    <Content Include="Views\Admin\DeleteProduct.cshtml" />
+    <Content Include="Views\Admin\DeleteArtist.cshtml" />
+    <Content Include="Views\Admin\DeleteAlbum.cshtml" />
+    <Content Include="Views\Admin\DeleteCategory.cshtml" />
+    <Content Include="Views\ShoppingCartItem\Index.cshtml" />
+    <Content Include="Views\Shared\_CartSummary.cshtml" />
+    <Content Include="Views\Orders\CheckoutComplete.cshtml" />
+    <Content Include="Views\Orders\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

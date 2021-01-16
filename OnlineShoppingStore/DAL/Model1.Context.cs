@@ -28,17 +28,19 @@ namespace OnlineShoppingStore.DAL
         }
     
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Album> Album { get; set; }
+        public virtual DbSet<Artist> Artist { get; set; }
         public virtual DbSet<Cart> Cart { get; set; }
         public virtual DbSet<CartStatus> CartStatus { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<MemberRole> MemberRole { get; set; }
         public virtual DbSet<Members> Members { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<ShippingDetails> ShippingDetails { get; set; }
         public virtual DbSet<SlideImage> SlideImage { get; set; }
-        public virtual DbSet<Album> Album { get; set; }
-        public virtual DbSet<Artist> Artist { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetail { get; set; }
     
         public virtual ObjectResult<GetBySearch_Result> GetBySearch(string search)
         {

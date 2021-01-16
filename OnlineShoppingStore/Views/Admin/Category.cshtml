@@ -43,7 +43,8 @@
                             <td>@(Model.IndexOf(item)+1)</td>
                             <td>@item.CategoryName</td>
                             <td>
-                                @Html.ActionLink("Edit", "CategoryEdit", new { categoryId = item.CategoryId })
+                                @Html.ActionLink("Edit", "CategoryEdit", new { categoryId = item.CategoryId }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Delete", "DeleteCategory", new { categoryId = item.CategoryId }, new { @class = "btn btn-danger" })
                             </td>
 
 

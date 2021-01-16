@@ -60,7 +60,8 @@
                             <td>@item.Description</td>
 
                             <td>
-                                @Html.ActionLink("Edit", "AlbumEdit", new { albumId = item.AlbumId })
+                                @Html.ActionLink("Edit", "AlbumEdit", new { albumId = item.AlbumId }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Delete", "DeleteAlbum", new { albumId = item.AlbumId }, new { @class = "btn btn-danger" })
                             </td>
 
 

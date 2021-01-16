@@ -53,7 +53,8 @@
                             <td>@item.Genre</td>
                             <td>@item.Country</td>
                             <td>
-                                @Html.ActionLink("Edit", "ArtistEdit", new { ArtistId = item.ArtistId })
+                                @Html.ActionLink("Edit", "ArtistEdit", new { ArtistId = item.ArtistId }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Delete", "DeleteArtist", new { ArtistId = item.ArtistId }, new { @class = "btn btn-danger" })
                             </td>
 
 

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<OnlineShoppingStore.Models.Home.Item>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using OnlineShoppingStore.DAL;
+@using OnlineShoppingStore.Models.Home;
+<h2>Index</h2>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cart</title>
+</head>
+<body>
+    @if (Session["cart"] == null)
+    {
+        <div class="alert alert-danger">
+            <strong>No product added to cart!</strong>
+            <br />
+            @Html.ActionLink("Start shopping", "Index", "Home")
+        </div>
+    }
+    else
+    {
+        <h3>Cart Page</h3>
+
+        <table cellpadding="2" cellspacing="2" border="1">
+            <tr>
+                <th class="text-center">Remove</th>
+                <th class="text-center">AlbumName</th>
+                <th class="text-center">ArtistName</th>
+                <th class="text-center">Date Released</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">Add/Sub</th>
+                <th class="text-center">Sub Total</th>
+            </tr>
+
+            @foreach (Item item in (List<Item>)Session["cart"])
+            {
+                <tr>
+                    <td class="text-center"><a href="@Url.Action("Remove", "ShoppingCartItem", new { id = item.Product.ProductId})">Remove</a></td>
+                    <td class="text-center">@item.Product.Category</td>
+                    <td class="text-center">@item.Product.ProductName</td>
+                    <td class="text-center">@*@item.Product.*@</td>
+                    <td class="text-center">@item.Product.Price</td>
+                    <td class="text-center">@item.Quantity</td>
+
+                    <td>
+                        <a class="glyphicon glyphicon-plus-sign" href="@Url.Action("IncreaseQuantity", "ShoppingCartItem", new { id = item.Product.ProductId })"> / </a>
+                        <a class="glyphicon glyphicon-minus-sign" href="@Url.Action("ReduceQuantity", "ShoppingCartItem", new { id = item.Product.ProductId })">  </a>
+                    </td>
+
+                    <td>@(item.Product.Price * item.Quantity)</td>
+                </tr>
+
+            }
+        </table>
+        <br>
+        <a href="@Url.Action("ClearCart", "ShoppingCartItem")">Clear Cart</a>
+        <br />
+        @Html.ActionLink("Shop some more?", "Index", "Home") //this may after need review
+        <br />
+        @Html.ActionLink("Checkout", "Checkout", "Orders")
+    }
+</body>
+</html>

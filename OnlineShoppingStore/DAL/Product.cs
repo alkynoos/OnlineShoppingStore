@@ -17,13 +17,12 @@ namespace OnlineShoppingStore.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.Cart = new HashSet<Cart>();
+            this.OrderDetail = new HashSet<OrderDetail>();
         }
     
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public Nullable<int> CategoryId { get; set; }
-        public Nullable<int> ArtistId { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDelete { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -32,11 +31,10 @@ namespace OnlineShoppingStore.DAL
         public string ProductImage { get; set; }
         public Nullable<bool> IsFeatured { get; set; }
         public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public decimal Price { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Cart { get; set; }
         public virtual Category Category { get; set; }
-        public virtual Artist Artist { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

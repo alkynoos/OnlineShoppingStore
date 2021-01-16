@@ -46,7 +46,7 @@ namespace OnlineShoppingStore.Repository
             return _dbSet;
         }
 
-        public Entity GetFirstorDefault(int recordId)
+        public Entity GetFirstorDefault(params object[] recordId)
         {
             return _dbSet.Find(recordId);
         }
