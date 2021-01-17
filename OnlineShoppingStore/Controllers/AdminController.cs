@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OnlineShoppingStore.DAL;
 using OnlineShoppingStore.Models;
+using OnlineShoppingStore.Models.ViewModels;
 using OnlineShoppingStore.Repository;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,6 @@ namespace OnlineShoppingStore.Controllers
         public GenericUnitOfWork _unitOfWork = new GenericUnitOfWork();
 
         // GET: Admin
-
-
-        
-
         public ActionResult Dashboard()
         {
             return View();
@@ -43,8 +40,8 @@ namespace OnlineShoppingStore.Controllers
         public ActionResult Album()
         {
             
-            //ViewBag.ArtistList = GetArtist();
             return View(_unitOfWork.GetRepositoryInstance<Album>().GetProduct());
+
         }
 
         public ActionResult AlbumEdit(int albumId)
@@ -184,8 +181,7 @@ namespace OnlineShoppingStore.Controllers
 
         #endregion
 
-        
-
+       
         #region Category 
 
         public List<SelectListItem> GetCategory()
@@ -271,11 +267,33 @@ namespace OnlineShoppingStore.Controllers
 
         public ActionResult Product()
         {
-            ViewBag.AlbumList = GetAlbum();
+            dbMyOnlineShoppingEntities ctx = new dbMyOnlineShoppingEntities();
+            
+            
 
-            
-            
-            return View(_unitOfWork.GetRepositoryInstance<Product>().GetProduct());
+            List<Product> productsList = ctx.Products.ToList();
+
+            ProductViewModel productVM = new ProductViewModel();
+
+            List<ProductViewModel> productVMList = productsList.Select(x => new ProductViewModel 
+            { ProductId = x.ProductId,
+                CategoryName = x.Category.CategoryName,
+                ArtistName = x.Artist.Name,
+                //AlbumName = x.Artist.Albums.Select( i => i.AlbumName).FirstOrDefault(),
+                AlbumName = x.Album.AlbumName,
+                Genre = x.Artist.Albums.Select(i => i.Genre).FirstOrDefault(),
+                ProductImage = x.ProductImage,
+                Description = x.Description,
+                IsFeatured = x.IsFeatured,
+                Quantity = x.Quantity,
+                Price= x.Price,
+                ModifiedDate = x.ModifiedDate,
+                CreatedDate = x.CreatedDate
+            }).ToList();
+
+           ViewBag.AlbumList = GetAlbum();
+           
+           return View(productVMList);
         }
 
         public ActionResult ProductEdit(int productId)

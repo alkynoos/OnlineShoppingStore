@@ -17,20 +17,18 @@ namespace OnlineShoppingStore.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Artist()
         {
-            this.Album = new HashSet<Album>();
-            this.Category = new HashSet<Category>();
+            this.Albums = new HashSet<Album>();
+            this.Products = new HashSet<Product>();
         }
     
         public int ArtistId { get; set; }
-        public string Genre { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
         public Nullable<bool> IsActive { get; set; }
-        public Nullable<bool> IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Album> Album { get; set; }
+        public virtual ICollection<Album> Albums { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Category> Category { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

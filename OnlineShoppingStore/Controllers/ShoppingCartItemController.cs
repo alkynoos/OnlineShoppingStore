@@ -25,7 +25,7 @@ namespace OnlineShoppingStore.Controllers
             if (Session["cart"] == null)
             {
                 List<Item> cart = new List<Item>();
-                var product = ctx.Product.Find(id);
+                var product = ctx.Products.Find(id);
 
                 cart.Add(new Item()
                 {
@@ -45,7 +45,7 @@ namespace OnlineShoppingStore.Controllers
                 }
                 else
                 {
-                    var product = ctx.Product.Find(id);
+                    var product = ctx.Products.Find(id);
                     cart.Add(new Item {
                         Product = product,
                         Quantity = 1 
@@ -75,10 +75,13 @@ namespace OnlineShoppingStore.Controllers
         {
             List<Item> cart = (List<Item>)Session["cart"];
             int index = isExist(id);
-            var product = ctx.Product.Find(id);
+            var product = ctx.Products.Find(id);
             foreach (var item in cart)
             {
-                item.Quantity++;
+                if (item.Product.ProductId == id)
+                {
+                    item.Quantity++;
+                }                
             }
             CartSinolo();
             Session["cart"] = cart;
@@ -89,7 +92,7 @@ namespace OnlineShoppingStore.Controllers
         {
             List<Item> cart = (List<Item>)Session["cart"];
             int index = isExist(id);
-            var product = ctx.Product.Find(id);
+            var product = ctx.Products.Find(id);
             var localAmount = 0;
             if (cart[index].Quantity > 1)
             {
