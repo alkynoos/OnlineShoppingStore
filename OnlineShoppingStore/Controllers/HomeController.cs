@@ -48,7 +48,7 @@ namespace OnlineShoppingStore.Controllers
             if (Session["cart"] != null)
             {
                 List<Item> cart = (List<Item>)Session["cart"];
-                var product = ctx.Product.Find(productId);
+                var product = ctx.Products.Find(productId);
                 foreach (var item in cart)
                 {
                     if (item.Product.ProductId == productId)
@@ -76,7 +76,7 @@ namespace OnlineShoppingStore.Controllers
             if (Session["cart"] == null)
             {
                 List<Item> cart = new List<Item>();
-                var product = ctx.Product.Find(productId);
+                var product = ctx.Products.Find(productId);
                 cart.Add(new Item()
                 {
                     Product = product,
@@ -88,7 +88,7 @@ namespace OnlineShoppingStore.Controllers
             {
                 List<Item> cart = (List<Item>)Session["cart"];
                 var count = cart.Count();
-                var product = ctx.Product.Find(productId);
+                var product = ctx.Products.Find(productId);
                 for (int i = 0; i < count; i++)
                 {
                     if (cart[i].Product.ProductId == productId)

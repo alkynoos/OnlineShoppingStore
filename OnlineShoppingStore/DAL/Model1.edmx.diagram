@@ -5,27 +5,19 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6d5502e22f2b46d699020e0ec67f99c9" Name="Diagram1" ZoomLevel="88">
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Cart" Width="1.5" PointX="8.25" PointY="4.5" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.CartStatus" Width="1.5" PointX="6" PointY="1" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Category" Width="1.5" PointX="3.75" PointY="0.75" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.MemberRole" Width="1.5" PointX="8.25" PointY="9.875" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Members" Width="1.5" PointX="6" PointY="9.375" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Product" Width="1.5" PointX="6" PointY="3.75" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Roles" Width="1.5" PointX="6" PointY="14.125" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.ShippingDetails" Width="1.5" PointX="10.5" PointY="3.875" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.SlideImage" Width="1.5" PointX="0.75" PointY="1.625" />
-        <AssociationConnector Association="dbMyOnlineShoppingModel.FK__Cart__CartStatus__36B12243" />
-        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Cart_CartStatus" />
-        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Cart_Members" />
-        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_ShippingDetails_Cart" />
-        <AssociationConnector Association="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" />
-        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_MemberRole_Members" />
-        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_MemberRole_Roles" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Album" Width="1.5" PointX="6" PointY="16.5" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Artist" Width="1.5" PointX="3.75" PointY="4.75" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Order" Width="1.5" PointX="6.625" PointY="7.875" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.OrderDetail" Width="1.5" PointX="6.625" PointY="4.25" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_OrderDetail_Order" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Category" Width="1.5" PointX="3.625" PointY="10" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Album" Width="1.5" PointX="1.875" PointY="0.875" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Artist" Width="1.5" PointX="1.5" PointY="5.125" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Album_Artist" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Product" Width="1.5" PointX="4.375" PointY="3.875" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Product_Album" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Product_Artist" />
-      </Diagram>
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_OrderDetail_Product" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

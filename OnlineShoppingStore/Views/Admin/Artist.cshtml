@@ -27,8 +27,7 @@
                 <thead>
                     <tr>
                         <th>Sr. No.</th>
-                        <th>Category Name</th>
-                        <th>Genre</th>
+                        <th>Artist</th>
                         <th>Country</th>                        
                         <th>Action</th>
 
@@ -37,8 +36,7 @@
                 <tfoot>
                     <tr>
                         <th>Sr. No.</th>
-                        <th>Category Name</th>
-                        <th>Genre</th>
+                        <th>Artist</th>                        
                         <th>Country</th>                        
                         <th>Action</th>
                     </tr>
@@ -49,11 +47,11 @@
 
                         <tr>
                             <td>@(Model.IndexOf(item)+1)</td>
-                            <td>@item.Name</td>
-                            <td>@item.Genre</td>
+                            <td>@item.Name</td>                            
                             <td>@item.Country</td>
                             <td>
-                                @Html.ActionLink("Edit", "ArtistEdit", new { ArtistId = item.ArtistId })
+                                @Html.ActionLink("Edit", "ArtistEdit", new { ArtistId = item.ArtistId }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Delete", "DeleteArtist", new { ArtistId = item.ArtistId }, new { @class = "btn btn-danger" })
                             </td>
 
 

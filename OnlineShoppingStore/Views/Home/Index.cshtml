@@ -95,7 +95,12 @@
                     <div>
                        @if (item.Quantity > 0)
                         {
-                            using (Html.BeginForm("AddToCart", "Home", new { productID = item.ProductId, url = "Index"}, FormMethod.Post))
+                            @*using (Html.BeginForm("AddToCart", "Home", new { productID = item.ProductId, url = "Index"}, FormMethod.Post))
+                            {
+                                <button type="submit" class="pull-right"><i class="fa fa-shopping-cart"></i></button>
+
+                            }*@
+                           using (Html.BeginForm("Buy", "ShoppingCartItem", new { id = item.ProductId}, FormMethod.Post))
                             {
                                 <button type="submit" class="pull-right"><i class="fa fa-shopping-cart"></i></button>
 

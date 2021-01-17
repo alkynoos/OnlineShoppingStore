@@ -15,7 +15,10 @@ namespace OnlineShoppingStore.Repository
         void Add(Entity entity);
         void Update(Entity entity);
         void UpdateByWhereClause(Expression<Func<Entity, bool>> wherePredict, Action<Entity> ForEachPredict);
-        Entity GetFirstorDefault(int recordId);
+        //Entity GetFirstorDefault(int recordId);
+        Entity GetFirstorDefault(params object[] recordId);
+
+
         void Remove(Entity entity);
         void RemovebyWhereClause(Expression<Func<Entity, bool>> wherePredict);
         void RemoveRangeBywhereClause(Expression<Func<Entity, bool>> wherePredict);

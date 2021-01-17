@@ -1,4 +1,5 @@
-﻿@model List<OnlineShoppingStore.DAL.Album>
+﻿@*@model IEnumerable<OnlineShoppingStore.Models.ViewModels.AlbumVM>*@
+@model List<OnlineShoppingStore.DAL.Album>
 
 @{
     ViewBag.Title = "Album";
@@ -38,7 +39,7 @@
                     <tr>
                         <th>Sr. No.</th>
                         <th>Name</th>
-                        <th>Artist</th>                        
+                        <th>Artist</th>
                         <th>Genre</th>
                         <th>Track No.</th>
                         <th>Release Date</th>
@@ -51,21 +52,22 @@
                     {
 
                         <tr>
-                            <td>@(Model.IndexOf(item)+1)</td>
+                            <td>@item.AlbumId</td>
                             <td>@item.AlbumName</td>
-                            <td>@item.Artist.Name</td>                        
+                            <td>@item.Artist.Name</td>
                             <td>@item.Genre</td>
                             <td>@item.TrackNo</td>
                             <td>@item.ReleaseDate</td>
                             <td>@item.Description</td>
 
                             <td>
-                                @Html.ActionLink("Edit", "AlbumEdit", new { albumId = item.AlbumId })
+                                @Html.ActionLink("Edit", "AlbumEdit", new { albumId = item.AlbumId }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Delete", "DeleteAlbum", new { albumId = item.AlbumId }, new { @class = "btn btn-danger" })
                             </td>
 
 
                         </tr>
-                        }
+                    }
 
                 </tbody>
             </table>
