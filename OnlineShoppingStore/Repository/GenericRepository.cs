@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -103,9 +104,30 @@ namespace OnlineShoppingStore.Repository
 
         public void Update(Entity entity)
         {
-            _dbSet.Attach(entity);
-            _DBEntity.Entry(entity).State = EntityState.Modified;
-            _DBEntity.SaveChanges();
+
+            try
+            {
+                _dbSet.Attach(entity);
+                _DBEntity.Entry(entity).State = EntityState.Modified;
+                _DBEntity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e);
+                //foreach (var eve in e.EntityValidationErrors)
+                //{
+                //    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                //        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                //    foreach (var ve in eve.ValidationErrors)
+                //    {
+                //        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                //            ve.PropertyName, ve.ErrorMessage);
+                //    }
+                //}
+                throw;
+            }
+           
         }
 
         public void UpdateByWhereClause(Expression<Func<Entity, bool>> wherePredict, Action<Entity> ForEachPredict)

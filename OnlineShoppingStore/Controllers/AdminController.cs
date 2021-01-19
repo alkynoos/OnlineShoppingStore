@@ -211,7 +211,7 @@ namespace OnlineShoppingStore.Controllers
         public ActionResult CategoryEdit(Category tbl)
         {
 
-            //tbl.ModifiedDate = DateTime.Now;
+            
             _unitOfWork.GetRepositoryInstance<Category>().Update(tbl);
             return RedirectToAction("Category");
         }
@@ -227,7 +227,7 @@ namespace OnlineShoppingStore.Controllers
         [HttpPost]
         public ActionResult CategoryAdd(Category tbl)
         {
-            tbl.IsActive = true;
+            
             _unitOfWork.GetRepositoryInstance<Category>().Add(tbl);
             return RedirectToAction("Category");
         }
@@ -278,10 +278,9 @@ namespace OnlineShoppingStore.Controllers
             List<ProductViewModel> productVMList = productsList.Select(x => new ProductViewModel 
             { ProductId = x.ProductId,
                 CategoryName = x.Category.CategoryName,
-                ArtistName = x.Artist.Name,
-                //AlbumName = x.Artist.Albums.Select( i => i.AlbumName).FirstOrDefault(),
-                AlbumName = x.Album.AlbumName,
-                Genre = x.Artist.Albums.Select(i => i.Genre).FirstOrDefault(),
+                ArtistName = x.Album.Artist.Name,                
+                AlbumName = x.Album.AlbumName,                
+                Genre = x.Album.Genre,
                 ProductImage = x.ProductImage,
                 Description = x.Description,
                 IsFeatured = x.IsFeatured,
@@ -312,7 +311,8 @@ namespace OnlineShoppingStore.Controllers
             {
                 pic = System.IO.Path.GetFileName(file.FileName);
                 string path = System.IO.Path.Combine(Server.MapPath("~/ProductImg"), pic);
-                //file is uploaded
+               
+
                 file.SaveAs(path);
             }
             tbl.ProductImage = file != null ? pic : tbl.ProductImage;
@@ -324,7 +324,7 @@ namespace OnlineShoppingStore.Controllers
         
         public ActionResult ProductAdd()
         {
-            ViewBag.ArtistList = GetArtist();
+            
             ViewBag.AlbumList = GetAlbum();
             ViewBag.CategoryList = GetCategory();
             return View();
@@ -339,7 +339,8 @@ namespace OnlineShoppingStore.Controllers
             {
                 pic = System.IO.Path.GetFileName(file.FileName);
                 string path = System.IO.Path.Combine(Server.MapPath("~/ProductImg"), pic);
-                //file is uploaded
+                
+
                 file.SaveAs(path);
             }
             tbl.ProductImage = pic;
@@ -371,6 +372,33 @@ namespace OnlineShoppingStore.Controllers
             _unitOfWork.GetRepositoryInstance<Product>().Remove(product);
             _unitOfWork.SaveChanges();
             return RedirectToAction("Product");
+        }
+
+        #endregion
+
+        #region Orders
+
+        public ActionResult Orders()
+        {
+            return View(_unitOfWork.GetRepositoryInstance<Order>().GetProduct());
+        }
+
+        public ActionResult OrdersComplete(int orderId)
+        {
+
+            
+            return View(_unitOfWork.GetRepositoryInstance<Order>().GetFirstorDefault(orderId));
+        }
+
+
+        [HttpPost]
+        public ActionResult OrdersComplete(Order tbl)
+        {
+            tbl.OrderComplete = true;
+            tbl.OrderCompleteDate = DateTime.Now;
+            _unitOfWork.GetRepositoryInstance<Order>().Update(tbl);
+
+            return RedirectToAction("Orders");            
         }
 
         #endregion

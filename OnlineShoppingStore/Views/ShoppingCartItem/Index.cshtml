@@ -32,8 +32,8 @@
         <table cellpadding="2" cellspacing="2" border="1">
             <tr>
                 <th class="text-center">Remove</th>
-                <th class="text-center">AlbumName</th>
-                <th class="text-center">ArtistName</th>
+                <th class="text-center">Product Name</th>
+                <th class="text-center">Category</th>
                 <th class="text-center">Date Released</th>
                 <th class="text-center">Price</th>
                 <th class="text-center">Quantity</th>
@@ -44,10 +44,10 @@
             @foreach (Item item in (List<Item>)Session["cart"])
             {
                 <tr>
-                    <td class="text-center"><a href="@Url.Action("Remove", "ShoppingCartItem", new { id = item.Product.ProductId})">Remove</a></td>
-                    <td class="text-center">@item.Product.Category</td>
+                    <td>@Html.ActionLink("Remove", "ShoppingCartItem", new { id = item.Product.ProductId }, new { @class = "btn btn-danger" })</td>                    
                     <td class="text-center">@item.Product.ProductName</td>
-                    <td class="text-center">@*@item.Product.*@</td>
+                    <td class="text-center">@item.Product.Category.CategoryName</td>
+                    <td class="text-center">@item.Product.Album.ReleaseDate</td>
                     <td class="text-center">@item.Product.Price</td>
                     <td class="text-center">@item.Quantity</td>
 
@@ -62,11 +62,9 @@
             }
         </table>
         <br>
-        <a href="@Url.Action("ClearCart", "ShoppingCartItem")">Clear Cart</a>
-        <br />
-        @Html.ActionLink("Shop some more?", "Index", "Home") //this may after need review
-        <br />
-        @Html.ActionLink("Checkout", "Checkout", "Orders")
+        <a class = "btn btn-warning" href="@Url.Action("ClearCart", "ShoppingCartItem")">Clear Cart</a>        
+        @Html.ActionLink("Shop some more?", "Index", "Home", new { @class = "btn btn-primary" }) 
+        @Html.ActionLink("Checkout", "Checkout", "Orders", new { @class = "btn btn-success" })
     }
 </body>
 </html>

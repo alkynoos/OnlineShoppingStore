@@ -24,7 +24,6 @@
           <Property Name="ArtistId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Country" Type="varchar" MaxLength="100" />
-          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -32,7 +31,6 @@
           </Key>
           <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="varchar" MaxLength="500" />
-          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -47,6 +45,8 @@
           <Property Name="PhoneNumber" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="OrderTotal" Type="money" />
           <Property Name="OrderPlaced" Type="date" />
+          <Property Name="OrderComplete" Type="bit" />
+          <Property Name="OrderCompleteDate" Type="date" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -65,7 +65,6 @@
           <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="varchar" MaxLength="500" />
           <Property Name="CategoryId" Type="int" />
-          <Property Name="ArtistId" Type="int" />
           <Property Name="AlbumId" Type="int" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -146,18 +145,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Product_Artist">
-          <End Role="Artist" Type="Self.Artist" Multiplicity="0..1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Artist">
-              <PropertyRef Name="ArtistId" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="ArtistId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetBySearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="search" Type="nvarchar(max)" Mode="In" />
@@ -220,10 +207,6 @@
             <End Role="Album" EntitySet="Album" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK_Product_Artist" Association="Self.FK_Product_Artist">
-            <End Role="Artist" EntitySet="Artist" />
-            <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -264,26 +247,17 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="Order" EntityType="dbMyOnlineShoppingModel.Order" />
           <EntitySet Name="OrderDetail" EntityType="dbMyOnlineShoppingModel.OrderDetail" />
-          <AssociationSet Name="FK_OrderDetail_Order" Association="dbMyOnlineShoppingModel.FK_OrderDetail_Order">
-            <End Role="Order" EntitySet="Order" />
-            <End Role="OrderDetail" EntitySet="OrderDetail" />
-          </AssociationSet>
-          <EntitySet Name="Categories" EntityType="dbMyOnlineShoppingModel.Category" />
           <EntitySet Name="Albums" EntityType="dbMyOnlineShoppingModel.Album" />
           <EntitySet Name="Artists" EntityType="dbMyOnlineShoppingModel.Artist" />
+          <EntitySet Name="Categories" EntityType="dbMyOnlineShoppingModel.Category" />
+          <EntitySet Name="Products" EntityType="dbMyOnlineShoppingModel.Product" />
           <AssociationSet Name="FK_Album_Artist" Association="dbMyOnlineShoppingModel.FK_Album_Artist">
             <End Role="Artist" EntitySet="Artists" />
             <End Role="Album" EntitySet="Albums" />
           </AssociationSet>
-          <EntitySet Name="Products" EntityType="dbMyOnlineShoppingModel.Product" />
           <AssociationSet Name="FK_Product_Album" Association="dbMyOnlineShoppingModel.FK_Product_Album">
             <End Role="Album" EntitySet="Albums" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_Artist" Association="dbMyOnlineShoppingModel.FK_Product_Artist">
-            <End Role="Artist" EntitySet="Artists" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK__Product__Quantit__286302EC" Association="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC">
@@ -292,6 +266,11 @@
           </AssociationSet>
           <AssociationSet Name="FK_OrderDetail_Product" Association="dbMyOnlineShoppingModel.FK_OrderDetail_Product">
             <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <EntitySet Name="Orders" EntityType="dbMyOnlineShoppingModel.Order" />
+          <AssociationSet Name="FK_OrderDetail_Order" Association="dbMyOnlineShoppingModel.FK_OrderDetail_Order">
+            <End Role="Order" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetail" />
           </AssociationSet>
           </EntityContainer>
@@ -335,21 +314,6 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="OrderId" />
-          </Key>
-          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AreaCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="OrderTotal" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="OrderPlaced" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="OrderDetail" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
-        </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
             <PropertyRef Name="OrderDetailId" />
@@ -359,29 +323,8 @@
           <Property Name="ProductId" Type="Int32" />
           <Property Name="Amount" Type="Int32" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="Order" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
           <NavigationProperty Name="Product" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Product" FromRole="OrderDetail" ToRole="Product" />
-        </EntityType>
-        <Association Name="FK_OrderDetail_Order">
-          <End Type="dbMyOnlineShoppingModel.Order" Role="Order" Multiplicity="0..1" />
-          <End Type="dbMyOnlineShoppingModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="OrderDetail">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="CategoryId" />
-          </Key>
-          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="Products" Relationship="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" FromRole="Category" ToRole="Product" />
+          <NavigationProperty Name="Order" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
         </EntityType>
         <EntityType Name="Album">
           <Key>
@@ -404,9 +347,35 @@
           <Property Name="ArtistId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Albums" Relationship="dbMyOnlineShoppingModel.FK_Album_Artist" FromRole="Artist" ToRole="Album" />
-          <NavigationProperty Name="Products" Relationship="dbMyOnlineShoppingModel.FK_Product_Artist" FromRole="Artist" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="AlbumId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProductImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsFeatured" Type="Boolean" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Album" Relationship="dbMyOnlineShoppingModel.FK_Product_Album" FromRole="Product" ToRole="Album" />
+          <NavigationProperty Name="Category" Relationship="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="OrderDetails" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Product" FromRole="Product" ToRole="OrderDetail" />
         </EntityType>
         <Association Name="FK_Album_Artist">
           <End Type="dbMyOnlineShoppingModel.Artist" Role="Artist" Multiplicity="0..1" />
@@ -420,28 +389,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ProductId" />
-          </Key>
-          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="CategoryId" Type="Int32" />
-          <Property Name="ArtistId" Type="Int32" />
-          <Property Name="AlbumId" Type="Int32" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ProductImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IsFeatured" Type="Boolean" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="Album" Relationship="dbMyOnlineShoppingModel.FK_Product_Album" FromRole="Product" ToRole="Album" />
-          <NavigationProperty Name="Artist" Relationship="dbMyOnlineShoppingModel.FK_Product_Artist" FromRole="Product" ToRole="Artist" />
-          <NavigationProperty Name="Category" Relationship="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" FromRole="Product" ToRole="Category" />
-          <NavigationProperty Name="OrderDetails" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Product" FromRole="Product" ToRole="OrderDetail" />
-        </EntityType>
         <Association Name="FK_Product_Album">
           <End Type="dbMyOnlineShoppingModel.Album" Role="Album" Multiplicity="0..1" />
           <End Type="dbMyOnlineShoppingModel.Product" Role="Product" Multiplicity="*" />
@@ -451,18 +398,6 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="AlbumId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Product_Artist">
-          <End Type="dbMyOnlineShoppingModel.Artist" Role="Artist" Multiplicity="0..1" />
-          <End Type="dbMyOnlineShoppingModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Artist">
-              <PropertyRef Name="ArtistId" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="ArtistId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -487,6 +422,35 @@
             </Principal>
             <Dependent Role="OrderDetail">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AreaCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrderTotal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OrderPlaced" Type="DateTime" Precision="0" />
+          <Property Name="OrderComplete" Type="Boolean" />
+          <Property Name="OrderCompleteDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="OrderDetails" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+        </EntityType>
+        <Association Name="FK_OrderDetail_Order">
+          <End Type="dbMyOnlineShoppingModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="dbMyOnlineShoppingModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -554,21 +518,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="dbMyOnlineShoppingModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="dbMyOnlineShoppingModel.Store.sp_upgraddiagrams" />
-          <EntitySetMapping Name="Order">
-            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Order">
-              <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="OrderPlaced" ColumnName="OrderPlaced" />
-                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="AreaCode" ColumnName="AreaCode" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OrderDetail">
             <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.OrderDetail">
               <MappingFragment StoreEntitySet="OrderDetail">
@@ -577,15 +526,6 @@
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Category">
-              <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -605,10 +545,17 @@
           <EntitySetMapping Name="Artists">
             <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Artist">
               <MappingFragment StoreEntitySet="Artist">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -624,10 +571,26 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="AlbumId" ColumnName="AlbumId" />
-                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="OrderCompleteDate" ColumnName="OrderCompleteDate" />
+                <ScalarProperty Name="OrderComplete" ColumnName="OrderComplete" />
+                <ScalarProperty Name="OrderPlaced" ColumnName="OrderPlaced" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="AreaCode" ColumnName="AreaCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

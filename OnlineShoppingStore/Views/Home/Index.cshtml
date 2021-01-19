@@ -64,7 +64,7 @@
         <input type="text" name="search" placeholder="Enter Keyword" class="inputComn form-control" />
         <div class="searchIcon">
             <button type="submit" class="searchBtn">
-                <img src="~/Images/searchIcon.png" />
+                <i class="fas fa-search"></i>
             </button>
         </div>
     </div>
@@ -81,30 +81,27 @@
 
 <div class="row product-container">
 
-   @foreach (var item in Model.ListOfProducts)
+    @foreach (var item in Model.ListOfProducts)
     {
-        <div class="col-md-3 col-sm-3 col-xs-6" style="margin-bottom:8px;">
-            <div class="thumbnail product-item" style="height:300px">
-                <img class="img-responsive" title="Click to View Product detail" 
-                     style="cursor:pointer; height:160px; width:100%" 
+        <div class="col-md-3 col-sm-3 col-xs-6 tile" style="margin-bottom:8px;">
+            <div class="thumbnail product-item" style="height:310px">
+                <img class="img-responsive" title="Click to View Product detail"
+                     style="cursor:pointer; height:160px; width:100%"
                      src="~/ProductImg/@item.ProductImage" />
 
                 <div class="caption">
-                    <h5 >@item.ProductName</h5>
+                    <h5>@item.ProductName</h5>
                     <p>@item.Price €</p>
                     <div>
-                       @if (item.Quantity > 0)
+                        @if (item.Quantity > 0)
                         {
-                            @*using (Html.BeginForm("AddToCart", "Home", new { productID = item.ProductId, url = "Index"}, FormMethod.Post))
-                            {
-                                <button type="submit" class="pull-right"><i class="fa fa-shopping-cart"></i></button>
 
-                            }*@
-                           using (Html.BeginForm("Buy", "ShoppingCartItem", new { id = item.ProductId}, FormMethod.Post))
+                            using (Html.BeginForm("Buy", "ShoppingCartItem", new { id = item.ProductId }, FormMethod.Post))
                             {
                                 <button type="submit" class="pull-right"><i class="fa fa-shopping-cart"></i></button>
 
                             }
+
                             <p>Available</p>
                         }
                         else
@@ -112,16 +109,16 @@
                             <p>Not Available</p>
                         }
                     </div>
-                        <div class="product-item-badge">
-                           @if (item.IsFeatured == true)
-                            {
-                                <p>New</p>
-                            }
-                            else
-                            {
-                                <p>Old</p>
-                            }
-                        </div>
+                    <div class="product-item-badge">
+                        @if (item.IsFeatured == true)
+                        {
+                            <p>New</p>
+                        }
+                        else
+                        {
+                            <p>Old</p>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

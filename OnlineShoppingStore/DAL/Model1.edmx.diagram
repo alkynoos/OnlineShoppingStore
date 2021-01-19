@@ -5,18 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6d5502e22f2b46d699020e0ec67f99c9" Name="Diagram1" ZoomLevel="88">
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Order" Width="1.5" PointX="6.625" PointY="7.875" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.OrderDetail" Width="1.5" PointX="6.625" PointY="4.25" />
-        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_OrderDetail_Order" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Category" Width="1.5" PointX="3.625" PointY="10" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Album" Width="1.5" PointX="1.875" PointY="0.875" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Artist" Width="1.5" PointX="1.5" PointY="5.125" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.OrderDetail" Width="1.5" PointX="8.375" PointY="4.375" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Album" Width="1.5" PointX="3" PointY="5.25" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Artist" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Category" Width="1.5" PointX="3" PointY="2.875" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Product" Width="1.5" PointX="5.625" PointY="4" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Album_Artist" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Product" Width="1.5" PointX="4.375" PointY="3.875" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Product_Album" />
-        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Product_Artist" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK_OrderDetail_Product" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Order" Width="1.5" PointX="8.375" PointY="8.125" />
+        <AssociationConnector Association="dbMyOnlineShoppingModel.FK_OrderDetail_Order" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

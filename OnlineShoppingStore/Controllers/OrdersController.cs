@@ -18,7 +18,7 @@ namespace OnlineShoppingStore.Controllers
         // GET: Orders
         public ActionResult Index()
         {
-            return View(ctx.Order.ToList());
+            return View(ctx.Orders.ToList());
         }
 
         public ActionResult CheckoutComplete()
@@ -41,6 +41,7 @@ namespace OnlineShoppingStore.Controllers
             List<Item> cart = (List<Item>)Session["cart"];
             if (ModelState.IsValid)
             {
+                
                 order.OrderPlaced = DateTime.Now;
                 decimal total = 0m;
                 decimal l = 0m;
@@ -50,7 +51,9 @@ namespace OnlineShoppingStore.Controllers
                     total += 1;
                 }
                 order.OrderTotal = total;
-                ctx.Order.Add(order);
+                
+                ctx.Orders.Add(order);
+                order.OrderComplete = false;
 
                 ctx.SaveChanges();
                 foreach( var shoppingCartItem in cart)
