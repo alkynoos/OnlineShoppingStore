@@ -23,7 +23,6 @@ namespace OnlineShoppingStore.DAL
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public Nullable<int> CategoryId { get; set; }
-        public Nullable<int> ArtistId { get; set; }
         public Nullable<int> AlbumId { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -35,7 +34,6 @@ namespace OnlineShoppingStore.DAL
         public decimal Price { get; set; }
     
         public virtual Album Album { get; set; }
-        public virtual Artist Artist { get; set; }
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

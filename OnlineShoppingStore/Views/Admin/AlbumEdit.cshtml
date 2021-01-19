@@ -18,6 +18,7 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.AlbumId)
 
+        <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.AlbumName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -25,10 +26,12 @@
                     @Html.ValidationMessageFor(model => model.AlbumName, "", new { @class = "text-danger" })
                 </div>
             </div>
+        </div>
 
             @{
                 List<SelectListItem> dataArtist = ViewBag.ArtistList;
             }
+        <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.ArtistId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -36,7 +39,9 @@
                     @Html.ValidationMessageFor(model => model.ArtistId, "", new { @class = "text-danger" })
                 </div>
             </div>
+        </div>
 
+        <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -44,7 +49,9 @@
                     @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
                 </div>
             </div>
+        </div>
 
+        <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.TrackNo, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -52,7 +59,9 @@
                     @Html.ValidationMessageFor(model => model.TrackNo, "", new { @class = "text-danger" })
                 </div>
             </div>
+        </div>
 
+        <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -60,7 +69,9 @@
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 </div>
             </div>
+        </div>
 
+        <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -68,6 +79,7 @@
                     @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
                 </div>
             </div>
+        </div>
 
 
             <div class="form-group">

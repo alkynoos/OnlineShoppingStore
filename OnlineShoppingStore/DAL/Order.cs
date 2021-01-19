@@ -17,7 +17,7 @@ namespace OnlineShoppingStore.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Order()
         {
-            this.OrderDetail = new HashSet<OrderDetail>();
+            this.OrderDetails = new HashSet<OrderDetail>();
         }
     
         public int OrderId { get; set; }
@@ -29,8 +29,10 @@ namespace OnlineShoppingStore.DAL
         public string PhoneNumber { get; set; }
         public Nullable<decimal> OrderTotal { get; set; }
         public Nullable<System.DateTime> OrderPlaced { get; set; }
+        public Nullable<bool> OrderComplete { get; set; }
+        public Nullable<System.DateTime> OrderCompleteDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
