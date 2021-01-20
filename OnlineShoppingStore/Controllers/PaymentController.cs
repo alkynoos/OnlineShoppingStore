@@ -15,7 +15,10 @@ namespace OnlineShoppingStore.Controllers
         {
             return View();
         }
-
+        public ActionResult SuccessView()
+        {
+            return View();
+        }
 
         public ActionResult PaymentWithPaypal(string Cancel = null)
         {
@@ -32,13 +35,13 @@ namespace OnlineShoppingStore.Controllers
                     //it is returned by the create function call of the payment class
                     // Creating a payment
                     // baseURL is the url on which paypal sendsback the data.
-                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/PaymentWithPayPal?";
+                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Payment/SuccessView";
                     //here we are generating guid for storing the paymentID received in session
                     //which will be used in the payment execution
                     var guid = Convert.ToString((new Random()).Next(100000));
                     //CreatePayment function gives us the payment approval url
                     //on which payer is redirected for paypal account payment
-                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
+                    var createdPayment = this.CreatePayment(apiContext, baseURI);
                     //get links returned from paypal in response to Create function call
                     var links = createdPayment.links.GetEnumerator();
                     string paypalRedirectUrl = null;
