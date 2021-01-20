@@ -290,8 +290,7 @@ namespace OnlineShoppingStore.Controllers
                 CreatedDate = x.CreatedDate
             }).ToList();
 
-           ViewBag.AlbumList = GetAlbum();
-           
+                      
            return View(productVMList);
         }
 
