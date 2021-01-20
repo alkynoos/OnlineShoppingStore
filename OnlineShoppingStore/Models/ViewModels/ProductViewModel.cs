@@ -33,7 +33,7 @@ namespace OnlineShoppingStore.Models.ViewModels
         public string ProductImage { get; set; }
         public bool? IsFeatured { get; set; }
         public int? Quantity { get; set; }
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
 
         public virtual List<Product> Products { get; set; }
        
