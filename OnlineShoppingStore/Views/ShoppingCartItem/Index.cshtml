@@ -63,8 +63,9 @@
         </table>
         <br>
         <a class = "btn btn-warning" href="@Url.Action("ClearCart", "ShoppingCartItem")">Clear Cart</a>        
-        @Html.ActionLink("Shop some more?", "Index", "Home", new { @class = "btn btn-primary" }) 
-        @Html.ActionLink("Checkout", "Checkout", "Orders", new { @class = "btn btn-success" })
+        <a class="btn btn-primary" href="@Url.Action("Index", "Home")">"Shop some more?"</a>        
+        <a class="btn btn-success" href="@Url.Action("Checkout", "Orders")">Checkout</a>       
+        
     }
 </body>
 </html>

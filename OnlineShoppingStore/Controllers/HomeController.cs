@@ -1,5 +1,6 @@
 ﻿using OnlineShoppingStore.DAL;
 using OnlineShoppingStore.Models.Home;
+using OnlineShoppingStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,16 +20,6 @@ namespace OnlineShoppingStore.Controllers
             return View(model.CreateModel(search, 4, page));//page size
         }
 
-        public ActionResult Checkout()
-        {
-            return View();
-        }
-        
-        public ActionResult CheckOutDetails()
-        {
-            return View();
-        }
-
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -42,98 +33,39 @@ namespace OnlineShoppingStore.Controllers
 
             return View();
         }
-
-        public ActionResult DecreaseQty(int productId)
+        
+        
+        
+        public ActionResult OurProducts()
         {
-            if (Session["cart"] != null)
-            {
-                List<Item> cart = (List<Item>)Session["cart"];
-                var product = ctx.Products.Find(productId);
-                foreach (var item in cart)
-                {
-                    if (item.Product.ProductId == productId)
-                    {
-                        int prevQty = item.Quantity;
-                        if (prevQty > 0)
-                        {
-                            cart.Remove(item);
-                            cart.Add(new Item()
-                            {
-                                Product = product,
-                                Quantity = prevQty - 1
-                            });
-                        }
-                        break;
-                    }
-                }
-                Session["cart"] = cart;
-            }
-            return Redirect("Checkout");
-        }
+            dbMyOnlineShoppingEntities ctx = new dbMyOnlineShoppingEntities();
 
-        public ActionResult AddToCart(int productId, string url)
-        {
-            if (Session["cart"] == null)
-            {
-                List<Item> cart = new List<Item>();
-                var product = ctx.Products.Find(productId);
-                cart.Add(new Item()
-                {
-                    Product = product,
-                    Quantity = 1
-                });
-                Session["cart"] = cart;
-            }
-            else
-            {
-                List<Item> cart = (List<Item>)Session["cart"];
-                var count = cart.Count();
-                var product = ctx.Products.Find(productId);
-                for (int i = 0; i < count; i++)
-                {
-                    if (cart[i].Product.ProductId == productId)
-                    {
-                        int prevQty = cart[i].Quantity;
-                        cart.Remove(cart[i]);
-                        cart.Add(new Item()
-                        {
-                            Product = product,
-                            Quantity = prevQty + 1
-                        });
-                        break;
-                    }
-                    else
-                    {
-                        var prd = cart.Where(x => x.Product.ProductId == productId).SingleOrDefault();
-                        if (prd == null)
-                        {
-                            cart.Add(new Item()
-                            {
-                                Product = product,
-                                Quantity = 1
-                            });
-                        }
-                    }
-                }
-                Session["cart"] = cart;
-            }
-            return Redirect(url);
-        }
+            List<Product> productsList = ctx.Products.ToList();
 
-        public ActionResult RemoveFromCart(int productId)
-        {
-            List<Item> cart = (List<Item>)Session["cart"];
+            ProductViewModel productVM = new ProductViewModel();
 
-            foreach (var item in cart)
+            List<ProductViewModel> productVMList = productsList.Select(x => new ProductViewModel
             {
-                if (item.Product.ProductId == productId)
-                {
-                    cart.Remove(item);
-                    break;
-                }
-            }
-            Session["cart"] = cart;
-            return Redirect("Index");
+                ProductId = x.ProductId,
+                CategoryName = x.Category.CategoryName,
+                ArtistName = x.Album.Artist.Name,
+                AlbumName = x.Album.AlbumName,
+                Genre = x.Album.Genre,
+                ProductImage = x.ProductImage,
+                Description = x.Description,
+                IsFeatured = x.IsFeatured,
+                Quantity = x.Quantity,
+                Price = x.Price,
+                ModifiedDate = x.ModifiedDate,
+                CreatedDate = x.CreatedDate
+            }).ToList();
+
+
+            return View(productVMList);
         }
+        
+
+   
+
     }
 }
