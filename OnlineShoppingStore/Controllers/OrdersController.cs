@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace OnlineShoppingStore.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
 
@@ -18,16 +19,17 @@ namespace OnlineShoppingStore.Controllers
         // GET: Orders
         public ActionResult Index()
         {
+            ViewData["Count"] = CartCount.cartcounter;
             return View(ctx.Orders.ToList());
         }
 
-        public ActionResult CheckoutComplete()
-        {
-            CartCount.cartcounter = 0;
-            ViewData["Count"] = CartCount.cartcounter;
-            ViewBag.CheckoutCompleteMessage = "Thank you for your order.";
-            return View();
-        }
+        //public ActionResult CheckoutComplete()
+        //{
+        //    CartCount.cartcounter = 0;
+        //    ViewData["Count"] = CartCount.cartcounter;
+        //    ViewBag.CheckoutCompleteMessage = "Thank you for your order.";
+        //    return View();
+        //}
 
         public ActionResult Checkout()
         {
@@ -48,29 +50,30 @@ namespace OnlineShoppingStore.Controllers
                 foreach (var item in cart)
                 {
                     l = item.Product.Price * item.Quantity;
-                    total += 1;
+                    total += l;
                 }
                 order.OrderTotal = total;
-                
-                ctx.Orders.Add(order);
                 order.OrderComplete = false;
+            
+                ctx.Orders.Add(order);
+               
 
                 ctx.SaveChanges();
                 foreach( var shoppingCartItem in cart)
                 {
-                    var orderDetil = new OrderDetail
+                    var orderDetail = new OrderDetail
                     {
                         Amount = shoppingCartItem.Quantity,
                         Price = shoppingCartItem.Product.Price,
                         ProductId = shoppingCartItem.Product.ProductId,
                         OrderId = order.OrderId
                     };
-                    ctx.OrderDetail.Add(orderDetil);
+                    ctx.OrderDetail.Add(orderDetail);
                 }
                 ctx.SaveChanges();
                 Session["cart"] = null;
             }
-            return RedirectToAction("CheckoutComplete");
+            return RedirectToAction("PaymentWithPaypal","Payment");
         }
 
         protected override void Dispose(bool disposing)

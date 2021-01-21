@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 using OnlineShoppingStore.DAL;
 using OnlineShoppingStore.Models;
 using OnlineShoppingStore.Models.ViewModels;
@@ -12,16 +14,45 @@ using System.Web.Mvc;
 
 namespace OnlineShoppingStore.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+  
     public class AdminController : Controller
     {
         public GenericUnitOfWork _unitOfWork = new GenericUnitOfWork();
+        public Boolean isAdminUser()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = User.Identity;
+                ApplicationDbContext context = new ApplicationDbContext();
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var s = UserManager.GetRoles(user.GetUserId());
+                var k= UserManager.GetRoles(user.GetUserId()).Count;
+                if (k>0)
+                {
+                    if (s[0].ToString() == "Admin")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+               
+            }
+            return false;
+        }
 
         // GET: Admin
         public ActionResult Dashboard()
         {
-            return View();
+            if (isAdminUser())
+            {
+                return View();
+            }
+                return RedirectToAction("Index", "Home");
         }
+      
 
         #region Album
 

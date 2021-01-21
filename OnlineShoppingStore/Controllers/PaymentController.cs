@@ -1,4 +1,5 @@
-﻿using PayPal.Api;
+﻿using OnlineShoppingStore.DAL;
+using PayPal.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace OnlineShoppingStore.Controllers
     
     public class PaymentController : Controller
     {
+        private dbMyOnlineShoppingEntities ctx = new dbMyOnlineShoppingEntities();
         [HttpGet]
         public ActionResult Index()
         {
@@ -93,6 +95,27 @@ namespace OnlineShoppingStore.Controllers
 
         private Payment CreatePayment(APIContext apiContext, string redirectUrl)
         {
+
+            var s = ctx.Orders.Last();
+
+            int  id = 0;
+            decimal? total = 0m;
+           // foreach (var i in s)
+           // {
+             //   lp++;
+               // if (lp == s.Count-1)
+               // {
+                    id = s.OrderId;
+                    total = s.OrderTotal;
+            //}
+            // }
+            //var m = ctx.OrderDetail.Where(n => n.OrderId == id).Select(b => b.Product).Select(c=>c.AlbumId);
+            //var alname = "";
+            //foreach (var y in m)
+            //{
+            //    alname = y.AlbumName;
+            //}
+            string pr = total.ToString();
             //create itemlist and add item objects to it
             var itemList = new ItemList()
             {
@@ -120,15 +143,15 @@ namespace OnlineShoppingStore.Controllers
             // Adding Tax, shipping and Subtotal details
             var details = new Details()
             {
-                tax = "1",
-                shipping = "1",
+                tax = "0",
+                shipping = "0",
                 subtotal = "1"
             };
             //Final amount with details
             var amount = new Amount()
             {
                 currency = "USD",
-                total = "3", // Total must be equal to sum of tax, shipping and subtotal.
+                total = "1", // Total must be equal to sum of tax, shipping and subtotal.
                 details = details
             };
             var transactionList = new List<Transaction>();

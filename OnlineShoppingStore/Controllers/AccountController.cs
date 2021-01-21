@@ -402,7 +402,14 @@ namespace OnlineShoppingStore.Controllers
         {
             return View();
         }
-
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Dashboard", "Admin");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -443,14 +450,7 @@ namespace OnlineShoppingStore.Controllers
             }
         }
 
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            return RedirectToAction("Index", "Home");
-        }
+       
 
         internal class ChallengeResult : HttpUnauthorizedResult
         {
