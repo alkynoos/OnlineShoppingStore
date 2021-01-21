@@ -12,10 +12,7 @@ namespace OnlineShoppingStore.Models.ViewModels
 
         public int ProductId { get; set; }
 
-        public string ProductName
-        { 
-            get { return this.ArtistName + " " + this.AlbumName; }
-        }
+        
 
 
         public string CategoryName { get; set; }
@@ -24,6 +21,12 @@ namespace OnlineShoppingStore.Models.ViewModels
         public string ArtistName { get; set; }
         
         public string AlbumName { get; set; }
+
+        public string ProductName
+        {
+            get { return this.CategoryName + ": " + this.ArtistName + " " + this.AlbumName; }
+
+        }
 
         public string Genre { get; set; }
 

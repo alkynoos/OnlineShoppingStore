@@ -294,6 +294,42 @@ namespace OnlineShoppingStore.Controllers
            return View(productVMList);
         }
 
+
+
+        public ActionResult ProductAdd()
+        {
+
+            ViewBag.AlbumList = GetAlbum();
+            ViewBag.CategoryList = GetCategory();
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult ProductAdd(Product tbl, HttpPostedFileBase file)
+        {
+            string pic = null;
+            if (file != null)
+            {
+                pic = System.IO.Path.GetFileName(file.FileName);
+                string path = System.IO.Path.Combine(Server.MapPath("~/ProductImg"), pic);
+
+
+                file.SaveAs(path);
+            }
+            tbl.ProductImage = pic;
+            tbl.CreatedDate = DateTime.Now;
+            tbl.IsActive = true;
+
+
+            tbl.ProductName = tbl.Album.AlbumName.FirstOrDefault().ToString();
+                       
+            
+            
+            _unitOfWork.GetRepositoryInstance<Product>().Add(tbl);
+            return RedirectToAction("Product");
+        }
+
         public ActionResult ProductEdit(int productId)
         {
             ViewBag.ArtistList = GetArtist();
@@ -305,7 +341,10 @@ namespace OnlineShoppingStore.Controllers
         [HttpPost]
         public ActionResult ProductEdit(Product tbl, HttpPostedFileBase file)
         {
-            string pic = null;
+            string pic = tbl.ProductImage;
+
+            
+
             if (file != null)
             {
                 pic = System.IO.Path.GetFileName(file.FileName);
@@ -317,36 +356,14 @@ namespace OnlineShoppingStore.Controllers
             tbl.ProductImage = file != null ? pic : tbl.ProductImage;
 
             tbl.ModifiedDate = DateTime.Now;
+
+            
+           
             _unitOfWork.GetRepositoryInstance<Product>().Update(tbl);
             return RedirectToAction("Product");
         }
         
-        public ActionResult ProductAdd()
-        {
-            
-            ViewBag.AlbumList = GetAlbum();
-            ViewBag.CategoryList = GetCategory();
-            return View();
-        }
 
-
-        [HttpPost]
-        public ActionResult ProductAdd(Product tbl, HttpPostedFileBase file)
-        {
-            string pic = null;
-            if (file !=null)
-            {
-                pic = System.IO.Path.GetFileName(file.FileName);
-                string path = System.IO.Path.Combine(Server.MapPath("~/ProductImg"), pic);
-                
-
-                file.SaveAs(path);
-            }
-            tbl.ProductImage = pic;
-            tbl.CreatedDate = DateTime.Now;
-            _unitOfWork.GetRepositoryInstance<Product>().Add(tbl);
-            return RedirectToAction("Product");
-        }
 
         public ActionResult DeleteProduct(int? productId)
         {

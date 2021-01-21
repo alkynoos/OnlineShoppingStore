@@ -9,14 +9,14 @@
         <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Artist" Width="1.5" PointX="0.75" PointY="2.125" />
         <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Category" Width="1.5" PointX="3" PointY="6.125" />
         <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Order" Width="1.5" PointX="5.25" PointY="6.25" />
+        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.OrderDetail" Width="1.5" PointX="7.5" PointY="1.75" />
         <EntityTypeShape EntityType="dbMyOnlineShoppingModel.Product" Width="1.5" PointX="5.25" PointY="1" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Album_Artist" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK_Product_Album" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK__Product__Quantit__286302EC" />
-        <EntityTypeShape EntityType="dbMyOnlineShoppingModel.OrderDetail" Width="1.5" PointX="7.5" PointY="4.125" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK_OrderDetail_Order" />
         <AssociationConnector Association="dbMyOnlineShoppingModel.FK_OrderDetail_Product" />
-        </Diagram>
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
