@@ -69,6 +69,7 @@ namespace OnlineShoppingStore.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return View("FailureView");
             }
             //on successful payment, show success page to user.

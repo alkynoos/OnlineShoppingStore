@@ -63,7 +63,7 @@
             <PropertyRef Name="ProductId" />
           </Key>
           <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductName" Type="varchar" MaxLength="500" />
+          <Property Name="ProductName" Type="varchar(max)" />
           <Property Name="CategoryId" Type="int" />
           <Property Name="AlbumId" Type="int" />
           <Property Name="IsActive" Type="bit" />
@@ -251,6 +251,7 @@
           <EntitySet Name="Artists" EntityType="dbMyOnlineShoppingModel.Artist" />
           <EntitySet Name="Categories" EntityType="dbMyOnlineShoppingModel.Category" />
           <EntitySet Name="Orders" EntityType="dbMyOnlineShoppingModel.Order" />
+          <EntitySet Name="OrderDetails" EntityType="dbMyOnlineShoppingModel.OrderDetail" />
           <EntitySet Name="Products" EntityType="dbMyOnlineShoppingModel.Product" />
           <AssociationSet Name="FK_Album_Artist" Association="dbMyOnlineShoppingModel.FK_Album_Artist">
             <End Role="Artist" EntitySet="Artists" />
@@ -264,7 +265,6 @@
             <End Role="Category" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <EntitySet Name="OrderDetails" EntityType="dbMyOnlineShoppingModel.OrderDetail" />
           <AssociationSet Name="FK_OrderDetail_Order" Association="dbMyOnlineShoppingModel.FK_OrderDetail_Order">
             <End Role="Order" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
@@ -362,12 +362,24 @@
           <Property Name="OrderCompleteDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="OrderDetails" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
         </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Order" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Product" FromRole="OrderDetail" ToRole="Product" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductId" />
           </Key>
           <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ProductName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CategoryId" Type="Int32" />
           <Property Name="AlbumId" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" />
@@ -418,18 +430,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="OrderDetail">
-          <Key>
-            <PropertyRef Name="OrderDetailId" />
-          </Key>
-          <Property Name="OrderDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderId" Type="Int32" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="Amount" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="Order" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
-          <NavigationProperty Name="Product" Relationship="dbMyOnlineShoppingModel.FK_OrderDetail_Product" FromRole="OrderDetail" ToRole="Product" />
-        </EntityType>
         <Association Name="FK_OrderDetail_Order">
           <End Type="dbMyOnlineShoppingModel.Order" Role="Order" Multiplicity="0..1" />
           <End Type="dbMyOnlineShoppingModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
@@ -565,6 +565,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.Product">
               <MappingFragment StoreEntitySet="Product">
@@ -580,17 +591,6 @@
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderDetails">
-            <EntityTypeMapping TypeName="dbMyOnlineShoppingModel.OrderDetail">
-              <MappingFragment StoreEntitySet="OrderDetail">
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
