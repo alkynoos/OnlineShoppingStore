@@ -33,27 +33,28 @@ namespace OnlineShoppingStore.Controllers
         }
         public ActionResult Index()
         {
-          //  if (User.Identity.IsAuthenticated)
-          //  {
-           //     var user = User.Identity;
-           //     ViewBag.Name = user.Name;
-                //	ApplicationDbContext context = new ApplicationDbContext();
-                //	var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = User.Identity;
+                ViewBag.Name = user.Name;
+                ApplicationDbContext context = new ApplicationDbContext();
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-                //var s=	UserManager.GetRoles(user.GetUserId());
-               
+                var s = UserManager.GetRoles(user.GetUserId());
 
-           //     if (isAdminUser())
-           //     {
-                   return View("Admin/Dashboard");
-            //    }
-              
-           /// }
-           // else
-           // {
-             //   ViewBag.Name = "Not Logged IN";
-            //}
-            //return View();
+
+                if (isAdminUser())
+                {
+                    return View("Admin/Dashboard");
+                }
+
+
+            }
+            else
+            {
+                ViewBag.Name = "Not Logged IN";
+            }
+            return View();
         }
     }
 }

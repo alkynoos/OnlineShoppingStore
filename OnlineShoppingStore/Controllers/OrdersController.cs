@@ -45,7 +45,7 @@ namespace OnlineShoppingStore.Controllers
             {
                 
                 order.OrderPlaced = DateTime.Now;
-                decimal total = 0m;
+                decimal? total = 0m;
                 decimal? l = 0m;
                 foreach (var item in cart)
                 {
@@ -68,7 +68,7 @@ namespace OnlineShoppingStore.Controllers
                         ProductId = shoppingCartItem.Product.ProductId,
                         OrderId = order.OrderId
                     };
-                    ctx.OrderDetails.Add(orderDetil);
+                    ctx.OrderDetails.Add(orderDetail);
                 }
                 ctx.SaveChanges();
                 Session["cart"] = null;
