@@ -29,5 +29,7 @@ namespace OnlineShoppingStore.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<OnlineShoppingStore.Models.ViewModels.ProductViewModel> ProductViewModels { get; set; }
     }
 }

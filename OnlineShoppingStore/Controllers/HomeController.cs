@@ -36,7 +36,7 @@ namespace OnlineShoppingStore.Controllers
         
         
         
-        public ActionResult OurProducts()
+        public ActionResult OurProducts(string searchBy, string search)
         {
             dbMyOnlineShoppingEntities ctx = new dbMyOnlineShoppingEntities();
 
@@ -60,12 +60,39 @@ namespace OnlineShoppingStore.Controllers
                 CreatedDate = x.CreatedDate
             }).ToList();
 
+            if (searchBy == "ArtistName")
+            {
+                return View(productVMList.Where(x => x.ArtistName == search || search == null).ToList());
+            }            
+            else if(searchBy == "AlbumName")
+            {
+                return View(productVMList.Where(x => x.AlbumName == search || search == null).ToList());
+            }
+            else
+            {
+                return View(productVMList.Where(x => x.CategoryName == search || search == null).ToList());
+            }
 
-            return View(productVMList);
+
+            //return View(productVMList);
         }
-        
 
-   
 
+
+        public PartialViewResult AllNew()
+        {
+
+            List<Product> productsList = ctx.Products.Where(x => x.IsFeatured == true).ToList();
+
+            return PartialView("_newProducts", productsList);
+        }
+
+
+        public PartialViewResult All()
+        {
+            List<Product> productsList = ctx.Products.ToList();
+
+            return PartialView("_newProducts", productsList);
+        }
     }
 }
