@@ -18,6 +18,7 @@ namespace OnlineShoppingStore.Models
         }
     }
 
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -32,4 +33,5 @@ namespace OnlineShoppingStore.Models
 
         public System.Data.Entity.DbSet<OnlineShoppingStore.Models.ViewModels.ProductViewModel> ProductViewModels { get; set; }
     }
+
 }

@@ -16,21 +16,21 @@ namespace OnlineShoppingStore.Controllers
         public ActionResult Index(string search, int? page)
         {
             HomeIndexViewModel model = new HomeIndexViewModel();
-
+            ViewData["Count"] = CartCount.cartcounter;
             return View(model.CreateModel(search, 4, page));//page size
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
+            ViewData["Count"] = CartCount.cartcounter;
             return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
+            ViewData["Count"] = CartCount.cartcounter;
             return View();
         }
         

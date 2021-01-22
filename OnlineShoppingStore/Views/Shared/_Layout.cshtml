@@ -63,7 +63,7 @@
                     </li>
                 </ul>*@
 
-                @Html.Partial("_CartSummary")
+              
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -74,13 +74,14 @@
 
                     <ul class="nav nav-pills">
                         @*<li class="active"><a style="border-radius:initial;" href="#">Home</a></li>
-                        <li><a style="border-radius:initial;" href="#">Location</a></li>
-                        <li><a style="border-radius:initial;" href="#">About</a></li>*@
+            <li><a style="border-radius:initial;" href="#">Location</a></li>
+            <li><a style="border-radius:initial;" href="#">About</a></li>*@
                         <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("Our Products", "OurProducts", "Home")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>                   
+                    </ul>
+                    @Html.Partial("_CartSummary")
                 </div>
             </div>
 
