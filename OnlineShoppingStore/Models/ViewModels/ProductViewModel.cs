@@ -1,6 +1,7 @@
 ﻿using OnlineShoppingStore.DAL;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,7 +10,7 @@ namespace OnlineShoppingStore.Models.ViewModels
     public class ProductViewModel
     {
         
-
+        [Key]
         public int ProductId { get; set; }
 
         
