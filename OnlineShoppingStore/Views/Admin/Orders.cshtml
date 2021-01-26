@@ -1,125 +1,37 @@
-﻿@model IEnumerable<OnlineShoppingStore.DAL.Order>
-
+﻿
 @{
     ViewBag.Title = "Orders";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Orders</h2>
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="../Admin/Dashboard">Dashboard</a>
-    </li>
-    <li class="breadcrumb-item active">Orders</li>
-</ol>
-<!-- DataTables Example -->
 
+<div id="dataModel"> </div>
+@section JavaScript{
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script type="text/javascript">
 
-<div class="card-body">
-    <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LastName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Address)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.City)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.AreaCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.PhoneNumber)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OrderTotal)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OrderPlaced)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OrderComplete)
-                    </th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LastName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Address)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.City)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.AreaCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.PhoneNumber)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OrderTotal)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OrderPlaced)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OrderComplete)
-                    </th>
-                    <th>Action</th>
-                </tr>
-            </tfoot>
+        $(function () {
+            var hubNotify = $.connection.OrdersHub;
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.City)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AreaCode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderTotal)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderPlaced)
-                    </td>
-                    <td>
-                        @item.OrderComplete
-                    </td>
-                    <td>
-                        @Html.ActionLink("Completed", "OrdersComplete", new { orderId = item.OrderId }, new { @class = "btn btn-success" })
-                        @Html.ActionLink("Cancel", "#", new { orderId = item.OrderId }, new { @class = "btn btn-danger" })
-                    </td>
-                </tr>
-            }
+            $.connection.hub.start().done(function () {
+                getAll();
+            });
 
-        </table>
-    </div>
-</div>
+            hubNotify.client.refreshOrdersData = function () {
+                getAll();
+            };
+        });
+
+        function getAll() {
+            var model = $('#dataModel');
+            $.ajax({
+                url: '/Admin/GetOrdersData',
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html',
+                success: function (result) { model.empty().append(result); }
+            });
+        }
+    </script>
+}
