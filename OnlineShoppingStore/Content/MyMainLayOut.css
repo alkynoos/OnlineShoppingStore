@@ -18,6 +18,23 @@ body {
     background: -o-linear-gradient(90deg, #00ff00 10%, #EAECC6 90%);  Opera 11.10+ 
     background: linear-gradient(90deg, #00ff00 10%, #EAECC6 90%);  W3C */
 }
+.nav.navbar-nav.navbar-right li a {
+    color: white;
+    font-size: 1.2em;
+}
+
+.navbar .nav > li > p {
+    font-size: 1.2em;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    color: white;
+    margin-top: 0.8em;
+}
+
+.navbar .nav > li > a {
+    font-size: 1.2em;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    color: white;
+}
 
 h1,
 h2,

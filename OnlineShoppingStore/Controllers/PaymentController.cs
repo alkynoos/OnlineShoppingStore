@@ -97,6 +97,7 @@ namespace OnlineShoppingStore.Controllers
         private Payment CreatePayment(APIContext apiContext, string redirectUrl)
         {
 
+
             //create itemlist and add item objects to it
 
             var itemList = new ItemList()
