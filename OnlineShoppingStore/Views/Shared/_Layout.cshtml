@@ -1,4 +1,4 @@
-﻿@using OnlineShoppingStore.Models.Home
+﻿
 
 <!DOCTYPE html>
 <html>
@@ -17,13 +17,14 @@
 <body>
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <div class="logo">
-                    <h1><a href="#">Back To <span><i>Vinyl</i></span></a></h1>
-                    @*<p>My Shop</p>*@
-                </div>
-            </div>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
 
             <div class="col-md-6 col-sm-6 col-xs-6">
 
@@ -77,15 +78,16 @@
                             <li><a style="border-radius:initial;" href="#">Location</a></li>
                             <li><a style="border-radius:initial;" href="#">About</a></li>*@
                         <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Our Products", "OurProducts", "Home")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     </ul>
                     @Html.Partial("_CartSummary")
+                    @Html.Partial("_LoginPartial")
                 </div>
             </div>
-
         </div>
+        <br />
+        <br />
         @RenderBody()
         <hr />
         <footer>
