@@ -74,6 +74,7 @@ namespace OnlineShoppingStore.Controllers
             }
             catch (Exception ex)
             {
+                //Console.WriteLine(ex);
                 return View("FailureView");
             }
             //on successful payment, show success page to user.
@@ -96,17 +97,29 @@ namespace OnlineShoppingStore.Controllers
         private Payment CreatePayment(APIContext apiContext, string redirectUrl)
         {
 
+<<<<<<< HEAD
           //  var s = ctx.Orders.Last();
 
            // int  id = 0;
            // decimal? total = 0m;
+=======
+            //var s = ctx.Orders.Last();
+
+            //int  id = 0;
+            //decimal? total = 0m;
+>>>>>>> master
            // foreach (var i in s)
            // {
              //   lp++;
                // if (lp == s.Count-1)
                // {
+<<<<<<< HEAD
               //      id = s.OrderId;
              //       total = s.OrderTotal;
+=======
+                    //id = s.OrderId;
+                    //total = s.OrderTotal;
+>>>>>>> master
             //}
             // }
             //var m = ctx.OrderDetail.Where(n => n.OrderId == id).Select(b => b.Product).Select(c=>c.AlbumId);
@@ -115,12 +128,18 @@ namespace OnlineShoppingStore.Controllers
             //{
             //    alname = y.AlbumName;
             //}
+<<<<<<< HEAD
            // string pr = total.ToString();
+=======
+            //string pr = total.ToString();
+>>>>>>> master
             //create itemlist and add item objects to it
+
             var itemList = new ItemList()
             {
                 items = new List<Item>()
             };
+
             //Adding Item Details like name, currency, price etc
             itemList.items.Add(new Item()
             {

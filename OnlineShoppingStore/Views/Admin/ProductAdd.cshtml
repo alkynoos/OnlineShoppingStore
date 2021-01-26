@@ -15,6 +15,7 @@
             <h4>Product</h4>
             <hr />
 
+            @Html.HiddenFor(model => model.ProductName)
             @{
                 List<SelectListItem> data = ViewBag.CategoryList;
             }

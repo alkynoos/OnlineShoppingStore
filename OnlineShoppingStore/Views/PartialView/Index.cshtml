@@ -1,0 +1,38 @@
+﻿@model IEnumerable<OnlineShoppingStore.Models.ViewModels.ProductViewModel>
+
+
+<div class="btn btn-default">
+    @Ajax.ActionLink("All", "AllVM", new AjaxOptions()
+    {
+    HttpMethod = "GET",
+    UpdateTargetId = "divProducts",
+    InsertionMode = InsertionMode.Replace
+    })
+</div>
+
+<div class="btn btn-default">
+    @Ajax.ActionLink("New", "AllNewVM", new AjaxOptions()
+    {
+       HttpMethod = "GET",
+       UpdateTargetId = "divProducts",
+       InsertionMode = InsertionMode.Replace
+    })
+</div>
+
+
+
+
+<div id="divProducts">
+    @Html.Partial("_Products", ViewData.Model)
+
+</div>
+
+
+
+
+
+
+
+
+
+

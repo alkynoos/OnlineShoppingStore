@@ -1,33 +1,27 @@
 ﻿@model IEnumerable<OnlineShoppingStore.Models.ViewModels.ProductViewModel>
 
 @{
-    ViewBag.Title = "OurProducts";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>OurProducts</h2>
 
-<p>
-    @using (Html.BeginForm("OurProducts", "Home", FormMethod.Get))
-    {
-        <b>Search By: </b>
-        @Html.RadioButton("searchBy", "ArtistName", true)<text> Artist</text>
-        @Html.RadioButton("searchBy", "AlbumName", false)<text>Album</text>
-        @Html.RadioButton("searchBy", "CategoryName", false)<text>Category</text><br />
-        @Html.TextBox("search")<input type="submit" name="name" value="Search" />
-    }
-
-</p>
+<div class="container">
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input type="text" id="Search" placeholder="Search" class="form-control" />
+        </div>
+    </div>
+</div>
 
 
-@if (Model.Count() == 0)
+<hr />
+
+
+@foreach (var item in Model)
 {
-    <div><h3>Sorry, No resualt for your search</h3></div>
-}
-else
-{
-    foreach (var item in Model)
-    {
+    <div class="Search">
         <div class="col-md-3 col-sm-3 col-xs-6 tile" style="margin-bottom:8px;">
             <div class="thumbnail product-item" style="height:310px">
                 <img class="img-responsive" title="Click to View Product detail"
@@ -35,7 +29,7 @@ else
                      src="~/ProductImg/@item.ProductImage" />
 
                 <div class="caption">
-                    <h5>@item.ProductName</h5>
+                    <div id="productName"><h5>@item.ProductName</h5></div>
                     <p>@item.Price €</p>
                     <div>
                         @if (item.Quantity > 0)
@@ -67,6 +61,36 @@ else
                 </div>
             </div>
         </div>
-    }
+    </div>
+
+    
+
+
 }
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+    <script>
+
+    $(document).ready(function () {
+            function Contains(text_one, text_two) {
+                if (text_one.indexOf(text_two) != -1)
+                    return true;
+            }
+
+            $("#Search").keyup(function () {
+                var searchText = $("#Search").val().toLowerCase();
+                $(".Search").each(function () {
+                    if (!Contains($(this).text().toLowerCase(), searchText)) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+
+    </script>
 
