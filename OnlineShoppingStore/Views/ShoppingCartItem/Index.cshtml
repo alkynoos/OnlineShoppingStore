@@ -43,10 +43,13 @@
             @foreach (Item item in (List<Item>)Session["cart"])
             {
                 <tr>
+
+
                     <td>@Html.ActionLink("Remove", "ShoppingCartItem", new { id = item.Product.ProductId }, new { @class = "btn btn-danger" })</td>
-                    <td class="text-center">@item.Product.ProductName</td>
                     <td class="text-center">@item.Product.Category.CategoryName</td>
-                    <td class="text-center"> @item.Product.Album.Artist.Name : @item.Product.Album.AlbumName</td>
+                    <td class="text-center">@item.Product.ProductName</td>
+                    
+                    @*<td class="text-center"> @item.Product.Album.Artist.Name : @item.Product.Album.AlbumName</td>*@
                     <td class="text-center">@item.Product.Price €</td>
                     <td class="text-center">@item.Quantity</td>
 
@@ -59,13 +62,13 @@
                 </tr>
             }
             <tr>
-                <td align="right" colspan="7">Total Bill</td>
+                <td align="right" colspan="6">Total Bill </td>
                 <td>
                     @{
                         List<Item> cart = (List<Item>)Session["cart"];
                         var total = cart.Sum(item => item.Product.Price * item.Quantity);
                     }
-                    @total
+                    @total €
                 </td>
             </tr>
         </table>

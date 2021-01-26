@@ -1,4 +1,4 @@
-﻿
+﻿@using OnlineShoppingStore.Models.Home
 
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/MyMainLayOut.css" rel="stylesheet" />
-    @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+    <link href="~/Content/Site.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/9e7375cf3d.js" crossorigin="anonymous"></script>
     @Scripts.Render("~/bundles/modernizr")
 
@@ -18,6 +18,55 @@
 <body>
 
     <div class="container">
+        <!--<div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="logo">
+                <h1><a href="#">Back To <span><i>Vinyl</i></span></a></h1>-->
+        @*<p>My Shop</p>*@
+        <!--</div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-xs-6">-->
+        @*<div class="account">
+                <ul>
+                    <li>
+                        <div class="hidden-xs">
+                            <h4><a>Call</a></h4>
+                            <p>018##-######</p>
+                        </div>
+
+                        <div class="visible-xs">
+
+                            <p>018##-######</p>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>*@
+
+        @*<ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">Cart(3)<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        @if (Session["cart"] != null)
+                        {
+                            foreach (var item in (List<Item>)Session["cart"])
+                            {
+                                <li>
+                                    <a href="@Url.Action("RemoveFromCart","Home", new { productID= item.Product.ProductId })">@item.Product.ProductName (@item.Quantity)<i class="fa fa-times"></i></a>
+                                </li>
+                            }
+                        }
+                        <li class="divider"></li>
+                        <li><a href="@Url.Action("Checkout", "Home")">Checkout</a></li>
+                    </ul>
+                </li>
+            </ul>*@
+
+
+        <!--@Html.Partial("_LoginPartial")
+            </div>
+        </div>-->
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -26,59 +75,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-
-            <div class="col-md-6 col-sm-6 col-xs-6">
-
-                @*<div class="account">
-                        <ul>
-                            <li>
-                                <div class="hidden-xs">
-                                    <h4><a>Call</a></h4>
-                                    <p>018##-######</p>
-                                </div>
-
-                                <div class="visible-xs">
-
-                                    <p>018##-######</p>
-                                </div>
-
-                            </li>
-                        </ul>
-                    </div>*@
-
-                @*<ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Cart(3)<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                @if (Session["cart"] != null)
-                                {
-                                    foreach (var item in (List<Item>)Session["cart"])
-                                    {
-                                        <li>
-                                            <a href="@Url.Action("RemoveFromCart","Home", new { productID= item.Product.ProductId })">@item.Product.ProductName (@item.Quantity)<i class="fa fa-times"></i></a>
-                                        </li>
-                                    }
-                                }
-                                <li class="divider"></li>
-                                <li><a href="@Url.Action("Checkout", "Home")">Checkout</a></li>
-                            </ul>
-                        </li>
-                    </ul>*@
-
-
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-        <div class="row">
-            @*Main navigation bar*@
-            <div class="col-md-12">
-                <div class="nav-menus">
-
-                    <ul class="nav nav-pills">
-                        @*<li class="active"><a style="border-radius:initial;" href="#">Home</a></li>
-                            <li><a style="border-radius:initial;" href="#">Location</a></li>
-                            <li><a style="border-radius:initial;" href="#">About</a></li>*@
-                        <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+                    </button>
+                    @Html.ActionLink("Back To Vinyl", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Our Products", "Index", "PartialView")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     </ul>
@@ -86,9 +88,9 @@
                     @Html.Partial("_LoginPartial")
                 </div>
             </div>
+
         </div>
-        <br />
-        <br />
+        <hr />
         @RenderBody()
         <hr />
         <footer>
