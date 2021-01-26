@@ -1,4 +1,5 @@
 ﻿using OnlineShoppingStore.DAL;
+using OnlineShoppingStore.Hubs;
 using OnlineShoppingStore.Models.Home;
 using OnlineShoppingStore.Repository;
 using System;
@@ -59,7 +60,8 @@ namespace OnlineShoppingStore.Controllers
                
 
                 ctx.SaveChanges();
-                foreach( var shoppingCartItem in cart)
+             
+                foreach ( var shoppingCartItem in cart)
                 {
                     var orderDetail = new OrderDetail
                     {
@@ -71,6 +73,7 @@ namespace OnlineShoppingStore.Controllers
                     ctx.OrderDetails.Add(orderDetail);
                 }
                 ctx.SaveChanges();
+                OrdersHub.BroadcastData();
                 Session["cart"] = null;
             }
             return RedirectToAction("PaymentWithPaypal","Payment");
