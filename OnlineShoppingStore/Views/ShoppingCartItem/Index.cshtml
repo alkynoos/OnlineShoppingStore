@@ -54,10 +54,21 @@
                         <a class="glyphicon glyphicon-minus-sign" href="@Url.Action("ReduceQuantity", "ShoppingCartItem", new { id = item.Product.ProductId })">  </a>
                     </td>
 
-                    <td>@(item.Product.Price * item.Quantity) €</td>
+                    <td align="center">@(item.Product.Price * item.Quantity) €</td>
                 </tr>
 
             }
+            <tr>
+                @*<a href="@Url.Action("ReduceQuantity", "ShoppingCartItem", new { id = item.Product.ProductId })">Reduce Amount</a>*@
+                <td align="right" colspan="6">Total Bill</td>
+                <td>
+                    @{
+                        List<Item> cart = (List<Item>)Session["cart"];
+                        var total = cart.Sum(item => item.Product.Price * item.Quantity);
+                    }
+                    <p style="margin-top:10px" align="center"> @total €</p>  
+                </td>
+            </tr>
         </table>
         <br>
         <a class="btn btn-warning" href="@Url.Action("ClearCart", "ShoppingCartItem")">Clear Cart</a>
