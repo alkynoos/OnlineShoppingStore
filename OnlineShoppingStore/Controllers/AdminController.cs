@@ -353,7 +353,7 @@ namespace OnlineShoppingStore.Controllers
             tbl.IsActive = true;
 
 
-            tbl.ProductName = tbl.Album.AlbumName.FirstOrDefault().ToString();
+            //tbl.ProductName = tbl.Album.AlbumName.FirstOrDefault().ToString();
                        
             
             

@@ -24,6 +24,7 @@ namespace OnlineShoppingStore.Controllers
         {
             ViewBag.Message = "Your application description page.";
             ViewData["Count"] = CartCount.cartcounter;
+            
             return View();
         }
 
@@ -36,8 +37,16 @@ namespace OnlineShoppingStore.Controllers
         
         
         
+
+
+
+
+
+
         public ActionResult OurProducts(string searchBy, string search)
         {
+
+            ViewData["Count"] = CartCount.cartcounter;
             dbMyOnlineShoppingEntities ctx = new dbMyOnlineShoppingEntities();
 
             List<Product> productsList = ctx.Products.ToList();
@@ -74,25 +83,71 @@ namespace OnlineShoppingStore.Controllers
             }
 
 
-            //return View(productVMList);
+            
         }
 
 
 
-        public PartialViewResult AllNew()
+
+
+        // using ViewModel for products
+        public PartialViewResult AllNewVM()
         {
-
-            List<Product> productsList = ctx.Products.Where(x => x.IsFeatured == true).ToList();
-
-            return PartialView("_newProducts", productsList);
-        }
+            dbMyOnlineShoppingEntities ctx = new dbMyOnlineShoppingEntities();
 
 
-        public PartialViewResult All()
-        {
+
             List<Product> productsList = ctx.Products.ToList();
 
-            return PartialView("_newProducts", productsList);
+            ProductViewModel productVM = new ProductViewModel();
+
+            List<ProductViewModel> productVMList = productsList.Select(x => new ProductViewModel
+            {
+                ProductId = x.ProductId,
+                CategoryName = x.Category.CategoryName,
+                ArtistName = x.Album.Artist.Name,
+                AlbumName = x.Album.AlbumName,
+                Genre = x.Album.Genre,
+                ProductImage = x.ProductImage,
+                Description = x.Description,
+                IsFeatured = x.IsFeatured,
+                Quantity = x.Quantity,
+                Price = x.Price,
+                ModifiedDate = x.ModifiedDate,
+                CreatedDate = x.CreatedDate
+            }).Where(x => x.IsFeatured == true).ToList();
+
+            return PartialView("_Products", productVMList);
+        }
+
+
+        public PartialViewResult AllVM()
+        {
+            dbMyOnlineShoppingEntities ctx = new dbMyOnlineShoppingEntities();
+
+
+
+            List<Product> productsList = ctx.Products.ToList();
+
+            ProductViewModel productVM = new ProductViewModel();
+
+            List<ProductViewModel> productVMList = productsList.Select(x => new ProductViewModel
+            {
+                ProductId = x.ProductId,
+                CategoryName = x.Category.CategoryName,
+                ArtistName = x.Album.Artist.Name,
+                AlbumName = x.Album.AlbumName,
+                Genre = x.Album.Genre,
+                ProductImage = x.ProductImage,
+                Description = x.Description,
+                IsFeatured = x.IsFeatured,
+                Quantity = x.Quantity,
+                Price = x.Price,
+                ModifiedDate = x.ModifiedDate,
+                CreatedDate = x.CreatedDate
+            }).ToList();
+
+            return PartialView("_Products", productVMList);
         }
     }
 }
