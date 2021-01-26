@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json;
 using OnlineShoppingStore.DAL;
+using OnlineShoppingStore.Hubs;
 using OnlineShoppingStore.Models;
 using OnlineShoppingStore.Models.ViewModels;
 using OnlineShoppingStore.Repository;
@@ -18,6 +19,7 @@ namespace OnlineShoppingStore.Controllers
     public class AdminController : Controller
     {
         public GenericUnitOfWork _unitOfWork = new GenericUnitOfWork();
+        private dbMyOnlineShoppingEntities ctx = new dbMyOnlineShoppingEntities();
         public Boolean isAdminUser()
         {
             if (User.Identity.IsAuthenticated)
@@ -407,10 +409,15 @@ namespace OnlineShoppingStore.Controllers
         #endregion
 
         #region Orders
-
+        public ActionResult GetOrdersData()
+        {
+            return PartialView("_OrdersData", _unitOfWork.GetRepositoryInstance<Order>().GetProduct().ToList());
+        }
         public ActionResult Orders()
         {
-            return View(_unitOfWork.GetRepositoryInstance<Order>().GetProduct());
+
+            // return View(_unitOfWork.GetRepositoryInstance<Order>().GetProduct());
+            return View();
         }
 
         public ActionResult OrdersComplete(int orderId)
