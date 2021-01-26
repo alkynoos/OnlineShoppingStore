@@ -17,7 +17,7 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.ProductId)
 
-            
+
 
             @{
                 List<SelectListItem> data = ViewBag.CategoryList;
@@ -36,15 +36,15 @@
             @{
                 List<SelectListItem> dataAlbum = ViewBag.AlbumList;
             }
-        <div class="col-md-6">
-            <div class="form-group">
-                @Html.LabelFor(model => model.AlbumId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.AlbumId, dataAlbum, "--Select--", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.AlbumId, "", new { @class = "text-danger" })
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AlbumId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.AlbumId, dataAlbum, "--Select--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.AlbumId, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
-        </div>
 
 
 
@@ -78,7 +78,7 @@
                     @Html.LabelFor(model => model.ProductImage, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
 
-
+                        @Html.HiddenFor(model => model.ProductImage)
                         <input type="file" name="file" id="file" style="width: 100%;" />
                         @Html.ValidationMessageFor(model => model.ProductImage, "", new { @class = "text-danger" })
                     </div>

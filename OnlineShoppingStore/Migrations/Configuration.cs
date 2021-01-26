@@ -9,7 +9,7 @@ namespace OnlineShoppingStore.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "OnlineShoppingStore.Models.ApplicationDbContext";
         }
 

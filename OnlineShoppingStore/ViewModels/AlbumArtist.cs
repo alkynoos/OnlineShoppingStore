@@ -9,7 +9,7 @@ namespace OnlineShoppingStore.ViewModels
 {
     public class AlbumArtist
     {
-        public Album album { get; set; }
-        public List<Artist> artists{ get; set; }
+        //public Album album { get; set; }
+        //public List<Artist> artists{ get; set; }
     }
 }

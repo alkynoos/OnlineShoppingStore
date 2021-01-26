@@ -31,7 +31,7 @@ namespace OnlineShoppingStore.DAL
         public string ProductImage { get; set; }
         public Nullable<bool> IsFeatured { get; set; }
         public Nullable<int> Quantity { get; set; }
-        public decimal Price { get; set; }
+        public Nullable<decimal> Price { get; set; }
     
         public virtual Album Album { get; set; }
         public virtual Category Category { get; set; }
