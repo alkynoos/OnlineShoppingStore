@@ -44,6 +44,7 @@
             {
                 <tr>
                     <td>@Html.ActionLink("Remove", "ShoppingCartItem", new { id = item.Product.ProductId }, new { @class = "btn btn-danger" })</td>
+                    <td class="text-center">@item.Product.ProductName</td>
                     <td class="text-center">@item.Product.Category.CategoryName</td>
                     <td class="text-center"> @item.Product.Album.Artist.Name : @item.Product.Album.AlbumName</td>
                     <td class="text-center">@item.Product.Price €</td>

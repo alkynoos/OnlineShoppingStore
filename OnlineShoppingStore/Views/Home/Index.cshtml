@@ -4,11 +4,10 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
-
-
-
-<div id="themeSlider" class="carousel slide" data-ride="carousel" style="margin-top:16px">
+<br />
+<br />
+<br />
+<div id="themeSlider" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#themeSlider" data-slide-to="0" class="active"></li>
         <li data-target="#themeSlider" data-slide-to="1"></li>
@@ -18,7 +17,7 @@
     <div class="carousel-inner">
         <div class="item">
             <div class="imgOverlay"></div>
-            <img style="height:420px; width:100%" src="../Images/florencia-viadana-f74kZNWhfps-unsplash.jpg" alt="Second slide">
+            <img style="height:400px; width:100%" src="../Images/florencia-viadana-f74kZNWhfps-unsplash.jpg" alt="Second slide">
             <div class="carousel-caption">
                 <h3>By something new</h3>
                 <p>See whats is new to our store</p>
@@ -26,7 +25,7 @@
         </div>
         <div class="item">
             <div class="imgOverlay"></div>
-            <img style="height:420px; width:100%" src="../Images/mitchel-lensink-KmGMMxVv0_Q-unsplash.jpg" alt="Third slide">
+            <img style="height:400px; width:100%" src="../Images/mitchel-lensink-KmGMMxVv0_Q-unsplash.jpg" alt="Third slide">
             <div class="carousel-caption">
                 <h3>Trade with others</h3>
                 <p>Trade with other users</p>
@@ -34,9 +33,9 @@
         </div>
         <div class="item active">
             <div class="imgOverlay"></div>
-            <img style="height:420px; width:100%" src="../Images/eric-krull-fi3_lDi3qPE-unsplash.jpg" alt="First slide">
+            <img style="height:400px; width:100%" src="../Images/eric-krull-fi3_lDi3qPE-unsplash.jpg" alt="First slide">
             <div class="carousel-caption">
-                <h3>What's new in the word of vinul</h3>
+                <h3>What's new in the word of vinyl</h3>
                 <p>See the lates new's </p>
             </div>
         </div>
@@ -73,13 +72,13 @@
     </div>
 </div>
 
-<div class="row product-container">
+<div class="row product-container" >
 
     @foreach (var item in Model.ListOfProducts)
     {
 
         <div class="col-md-3 col-sm-3 col-xs-6 tile" style="margin-bottom:8px;">
-            <div class="thumbnail product-item" style="height:310px">
+            <div class="thumbnail product-item" style="height:310px;">
                 <img class="img-responsive" title="Click to View Product detail"
                      style="cursor:pointer; height:160px; width:100%"
                      src="~/ProductImg/@item.ProductImage" />
