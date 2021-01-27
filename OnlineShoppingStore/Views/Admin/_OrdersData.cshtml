@@ -1,6 +1,4 @@
-﻿<!-- DataTables Example -->
-
-
+﻿
 @model IEnumerable<OnlineShoppingStore.DAL.Order>
 
 @{
@@ -44,9 +42,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.OrderPlaced)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OrderComplete)
-                    </th>
+                   
                     <th>Action</th>
                 </tr>
             </thead>
@@ -76,9 +72,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.OrderPlaced)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OrderComplete)
-                    </th>
+                   
                     <th>Action</th>
                 </tr>
             </tfoot>
@@ -110,12 +104,20 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.OrderPlaced)
                     </td>
+                    
                     <td>
-                        @item.OrderComplete
-                    </td>
-                    <td>
-                        @Html.ActionLink("Completed", "OrdersComplete", new { orderId = item.OrderId }, new { @class = "btn btn-success" })
-                        @Html.ActionLink("Cancel", "#", new { orderId = item.OrderId }, new { @class = "btn btn-danger" })
+                        @if (item.OrderComplete == false)
+                        {
+                            @Html.ActionLink("Completed", "OrdersComplete", new { orderId = item.OrderId }, new { @class = "btn btn-success" })
+                            @Html.ActionLink("Cancel", "DeleteOrders", new { orderId = item.OrderId }, new { @class = "btn btn-danger" })
+
+                        }
+                        else
+                        {
+                            <b>Set as Completed:</b>
+                            @item.OrderCompleteDate
+                        }
+
                     </td>
                 </tr>
             }

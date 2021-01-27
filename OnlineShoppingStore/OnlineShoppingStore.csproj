@@ -1708,7 +1708,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Images\eric-krull-fi3_lDi3qPE-unsplash.jpg" />
     <Content Include="Images\florencia-viadana-f74kZNWhfps-unsplash.jpg" />
     <Content Include="Images\mastadon.jpg" />
@@ -1798,15 +1797,10 @@
     <Content Include="Scripts\jquery-2.2.4.min.js" />
     <Content Include="Scripts\jquery-2.2.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-
-
     <Content Include="Scripts\jquery.signalR-2.4.1.js" />
     <Content Include="Scripts\jquery.signalR-2.4.1.min.js" />
-
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-
-
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1872,15 +1866,13 @@
     <Content Include="Views\Orders\CheckoutComplete.cshtml" />
     <Content Include="Views\Orders\Checkout.cshtml" />
     <Content Include="Views\Admin\Orders.cshtml" />
-    <Content Include="Views\Admin\OrdersComplete.cshtml" />
     <Content Include="Views\Home\OurProducts.cshtml" />
-
     <Content Include="Views\Admin\_OrdersData.cshtml" />
-
     <Content Include="Views\QuickSearchProducts\Index.cshtml" />
     <Content Include="Views\Shared\_Products.cshtml" />
     <Content Include="Views\PartialView\Index.cshtml" />
-
+    <Content Include="Views\Admin\DeleteOrders.cshtml" />
+    <Content Include="Views\Admin\OrdersComplete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

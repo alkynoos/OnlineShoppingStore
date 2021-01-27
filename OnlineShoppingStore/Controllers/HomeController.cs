@@ -11,13 +11,33 @@ namespace OnlineShoppingStore.Controllers
 {
     public class HomeController : Controller
     {
-        dbMyOnlineShoppingEntities ctx = new dbMyOnlineShoppingEntities(); //We can use reposiory
+       private static dbMyOnlineShoppingEntities ctx = new dbMyOnlineShoppingEntities();
 
-        public ActionResult Index(string search, int? page)
+        private static List<Product> productsList = ctx.Products.ToList();
+
+        //private static ProductViewModel productVM = new ProductViewModel();
+
+        private static List<ProductViewModel> productVMList = productsList.Select(x => new ProductViewModel
         {
-            HomeIndexViewModel model = new HomeIndexViewModel();
+            ProductId = x.ProductId,
+            CategoryName = x.Category.CategoryName,
+            ArtistName = x.Album.Artist.Name,
+            AlbumName = x.Album.AlbumName,
+            Genre = x.Album.Genre,
+            ProductImage = x.ProductImage,
+            Description = x.Description,
+            IsFeatured = x.IsFeatured,
+            Quantity = x.Quantity,
+            Price = x.Price,
+            ModifiedDate = x.ModifiedDate,
+            CreatedDate = x.CreatedDate
+        }).ToList();
+
+        public ActionResult Index()
+        {
             ViewData["Count"] = CartCount.cartcounter;
-            return View(model.CreateModel(search, 4, page));//page size
+            ViewData.Model = productVMList.Where(x=>x.IsFeatured == true);
+            return View();
         }
 
         public ActionResult About()

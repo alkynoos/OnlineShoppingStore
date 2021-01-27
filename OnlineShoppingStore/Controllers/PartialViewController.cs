@@ -56,5 +56,18 @@ namespace OnlineShoppingStore.Controllers
         {
             return PartialView("_Products", productVMList);
         }
+
+        public PartialViewResult AllVinyl()
+        {
+            return PartialView("_Products", productVMList.Where(x => x.CategoryName == "Vinyl"));
+        }
+        public PartialViewResult AllBoxSet()
+        {
+            return PartialView("_Products", productVMList.Where(x => x.CategoryName == "Boxset"));
+        }
+        public PartialViewResult AllCD()
+        {
+            return PartialView("_Products", productVMList.Where(x => x.CategoryName == "CD"));
+        }
     }
 }

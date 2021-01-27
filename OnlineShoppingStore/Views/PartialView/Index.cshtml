@@ -1,30 +1,66 @@
 ﻿@model IEnumerable<OnlineShoppingStore.Models.ViewModels.ProductViewModel>
 
 
-<div class="btn btn-default">
-    @Ajax.ActionLink("All", "AllVM", new AjaxOptions()
-    {
-    HttpMethod = "GET",
-    UpdateTargetId = "divProducts",
-    InsertionMode = InsertionMode.Replace
-    })
-</div>
-
-<div class="btn btn-default">
-    @Ajax.ActionLink("New", "AllNewVM", new AjaxOptions()
-    {
-       HttpMethod = "GET",
-       UpdateTargetId = "divProducts",
-       InsertionMode = InsertionMode.Replace
-    })
-</div>
 
 
 
+<div class="container">
 
-<div id="divProducts">
-    @Html.Partial("_Products", ViewData.Model)
+    <h2>Our Products</h2>
 
+    <div class="btn btn-default">
+        @Ajax.ActionLink("All", "AllVM", new AjaxOptions()
+        {
+        HttpMethod = "GET",
+        UpdateTargetId = "divProducts",
+        InsertionMode = InsertionMode.Replace
+        })
+    </div>
+
+    <div class="btn btn-default">
+        @Ajax.ActionLink("New", "AllNewVM", new AjaxOptions()
+        {
+           HttpMethod = "GET",
+           UpdateTargetId = "divProducts",
+           InsertionMode = InsertionMode.Replace
+        })
+    </div>
+
+    <div class="btn btn-default">
+        @Ajax.ActionLink("Vinyl", "AllVinyl", new AjaxOptions()
+        {
+           HttpMethod = "GET",
+           UpdateTargetId = "divProducts",
+           InsertionMode = InsertionMode.Replace
+        })
+    </div>
+    
+    <div class="btn btn-default">
+        @Ajax.ActionLink("Box Set", "AllBoxSet", new AjaxOptions()
+        {
+           HttpMethod = "GET",
+           UpdateTargetId = "divProducts",
+           InsertionMode = InsertionMode.Replace
+        })
+    </div>
+    
+    <div class="btn btn-default">
+        @Ajax.ActionLink("CD", "AllCD", new AjaxOptions()
+        {
+           HttpMethod = "GET",
+           UpdateTargetId = "divProducts",
+           InsertionMode = InsertionMode.Replace
+        })
+    </div>
+    <hr />
+
+
+
+
+    <div id="divProducts">
+        @Html.Partial("_Products", ViewData.Model)
+
+    </div>
 </div>
 
 

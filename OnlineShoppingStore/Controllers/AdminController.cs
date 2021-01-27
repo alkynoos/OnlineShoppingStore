@@ -9,6 +9,7 @@ using OnlineShoppingStore.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -354,9 +355,6 @@ namespace OnlineShoppingStore.Controllers
             tbl.CreatedDate = DateTime.Now;
             tbl.IsActive = true;
 
-
-            //tbl.ProductName = tbl.Album.AlbumName.FirstOrDefault().ToString();
-                       
             
             
             _unitOfWork.GetRepositoryInstance<Product>().Add(tbl);
@@ -440,7 +438,7 @@ namespace OnlineShoppingStore.Controllers
         public ActionResult OrdersComplete(int orderId)
         {
 
-            
+
             return View(_unitOfWork.GetRepositoryInstance<Order>().GetFirstorDefault(orderId));
         }
 
@@ -453,6 +451,43 @@ namespace OnlineShoppingStore.Controllers
             _unitOfWork.GetRepositoryInstance<Order>().Update(tbl);
 
             return RedirectToAction("Orders");            
+        }
+
+
+        // NOTE: I can't delete this it conflics with relation table of order details(needs to be deleted also
+
+        public ActionResult DeleteOrders(int? orderId)
+        {
+            if (orderId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //Expression<Func<OrderDetail, bool>> expression = x => x.OrderId == orderId;
+            //OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefaultByParameter(expression);
+            OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefault(orderId);
+            Order order = _unitOfWork.GetRepositoryInstance<Order>().GetFirstorDefault(orderId);
+
+            if (order == null && orderDetail ==null)
+            {
+                return HttpNotFound();
+            }
+            return View(order);
+        }
+
+        [HttpPost, ActionName("DeleteOrders")]
+        [ValidateAntiForgeryToken]
+        public ActionResult OrdersConfirmed(int orderId)
+        {
+            //Expression<Func<OrderDetail, bool>> expression = x => x.OrderId == orderId;
+            //OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefaultByParameter(expression);
+            OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefault(orderId);
+            Order order = _unitOfWork.GetRepositoryInstance<Order>().GetFirstorDefault(orderId);
+
+            _unitOfWork.GetRepositoryInstance<Order>().Remove(order);
+            _unitOfWork.GetRepositoryInstance<OrderDetail>().Remove(orderDetail);
+
+            _unitOfWork.SaveChanges();
+            return RedirectToAction("Order");
         }
 
         #endregion
