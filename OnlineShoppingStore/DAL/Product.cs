@@ -11,7 +11,8 @@ namespace OnlineShoppingStore.DAL
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,14 +22,25 @@ namespace OnlineShoppingStore.DAL
         }
     
         public int ProductId { get; set; }
+       
         public string ProductName { get; set; }
+        [Display(Name = "Category")]
+        [Required(ErrorMessage = "An Category Name is required")]
         public Nullable<int> CategoryId { get; set; }
+        [Display(Name = "Album")]
+        [Required(ErrorMessage = "An Album Name is required")]
         public Nullable<int> AlbumId { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        [Display(Name = "Created Date")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        [Display(Name = "Modified Date")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string Description { get; set; }
+        [Display(Name = "Product Image")]
         public string ProductImage { get; set; }
+        [Display(Name = "Set as new product")]
         public Nullable<bool> IsFeatured { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> Price { get; set; }

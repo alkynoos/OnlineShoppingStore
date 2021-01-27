@@ -11,7 +11,8 @@ namespace OnlineShoppingStore.DAL
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Album
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,9 +22,16 @@ namespace OnlineShoppingStore.DAL
         }
     
         public int AlbumId { get; set; }
+        [Display(Name = "Album Title")]
+        [Required(ErrorMessage = "An Album Title is required")]
         public string AlbumName { get; set; }
+        [Display(Name = "Artist")]
+        [Required(ErrorMessage = "An Artist is required")]
         public Nullable<int> ArtistId { get; set; }
+
+        [Display(Name = "Track No.")]
         public Nullable<int> TrackNo { get; set; }
+
         public string Description { get; set; }
         public Nullable<System.DateTime> ReleaseDate { get; set; }
         public string Genre { get; set; }

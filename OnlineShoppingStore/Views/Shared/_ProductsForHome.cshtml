@@ -1,0 +1,91 @@
+﻿@model IEnumerable<OnlineShoppingStore.Models.ViewModels.ProductViewModel>
+
+
+<div class="container">
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input type="text" id="Search" placeholder="Search" class="form-control" />
+        </div>
+    </div>
+</div>
+
+
+@if (Model.Count() == 0)
+{
+    <div id="mainBody"><h3>Sorry, No resualt for your search</h3></div>
+}
+else
+{
+    foreach (var item in Model)
+    {
+        <div class="Search">
+            <div class="col-md-3 col-sm-3 col-xs-6 tile" style="margin-bottom:8px;">
+                <div class="myThampNail">
+                    <div class="thumbnail product-item" style="height:310px; border-color:none; margin:inherit; background-color: rgba(0, 0, 0, 0.5);">
+                        <img class="img-responsive" title="Click to View Product detail"
+                             style="cursor:pointer; height:140px; width:100%"
+                             src="~/ProductImg/@item.ProductImage" />
+
+                        <div class="caption" style="color:white;">
+                            <h5>@item.ProductName</h5>
+                            <p>@item.Price €</p>
+                            <div>
+                                @if (item.Quantity > 0)
+                                {
+
+                                    <p>Available</p>
+                                }
+                                else
+                                {
+                                    <p>Not Available</p>
+                                }
+                            </div>
+                            <div class="product-item-badge">
+                                @if (item.IsFeatured == true)
+                                {
+                                    <p>New</p>
+                                }
+                                else
+                                {
+                                    <p>Old</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+
+    <script src="~/Scripts/jquery-2.2.4.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            function Contains(text_one, text_two) {
+                if (text_one.indexOf(text_two) != -1)
+                    return true;
+            }
+
+            $("#Search").keyup(function () {
+                var searchText = $("#Search").val().toLowerCase();
+                $(".Search").each(function () {
+                    if (!Contains($(this).text().toLowerCase(), searchText)) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+
+    </script>
+
+}
+
+

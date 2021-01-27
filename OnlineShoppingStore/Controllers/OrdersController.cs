@@ -35,6 +35,11 @@ namespace OnlineShoppingStore.Controllers
         public ActionResult Checkout()
         {
             ViewData["Count"] = CartCount.cartcounter;
+            List<Item> cart = (List<Item>)Session["cart"];
+            var total = cart.Sum(item => item.Product.Price * item.Quantity);
+            ViewData["TotalPrice"] = total;
+
+                        //< p style = "margin-top:10px" align = "center" > @total €</ p >;
             return View();
         }
 

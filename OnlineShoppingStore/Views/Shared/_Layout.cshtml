@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @*@Styles.Render("~/Content/css")*@
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
    
@@ -19,11 +19,8 @@
 
     <div class="myContainer">
         <div class="container">
-            <!--<div class="row">
-       
-            <!--@Html.Partial("_LoginPartial")
-            </div>
-        </div>-->
+
+                
 
             <div class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container">
@@ -39,7 +36,7 @@
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
 
-                            <li>@Html.ActionLink("Our Products", "Index", "PartialView")</li>
+                            <li>@Html.ActionLink("Our collection", "Index", "PartialView")</li>
 
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>

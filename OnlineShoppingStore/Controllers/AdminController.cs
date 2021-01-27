@@ -456,39 +456,39 @@ namespace OnlineShoppingStore.Controllers
 
         // NOTE: I can't delete this it conflics with relation table of order details(needs to be deleted also
 
-        public ActionResult DeleteOrders(int? orderId)
-        {
-            if (orderId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            //Expression<Func<OrderDetail, bool>> expression = x => x.OrderId == orderId;
-            //OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefaultByParameter(expression);
-            OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefault(orderId);
-            Order order = _unitOfWork.GetRepositoryInstance<Order>().GetFirstorDefault(orderId);
+        //public ActionResult DeleteOrders(int? orderId)
+        //{
+        //    if (orderId == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    //Expression<Func<OrderDetail, bool>> expression = x => x.OrderId == orderId;
+        //    //OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefaultByParameter(expression);
+        //    OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefault(orderId);
+        //    Order order = _unitOfWork.GetRepositoryInstance<Order>().GetFirstorDefault(orderId);
 
-            if (order == null && orderDetail ==null)
-            {
-                return HttpNotFound();
-            }
-            return View(order);
-        }
+        //    if (order == null && orderDetail ==null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(order);
+        //}
 
-        [HttpPost, ActionName("DeleteOrders")]
-        [ValidateAntiForgeryToken]
-        public ActionResult OrdersConfirmed(int orderId)
-        {
-            //Expression<Func<OrderDetail, bool>> expression = x => x.OrderId == orderId;
-            //OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefaultByParameter(expression);
-            OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefault(orderId);
-            Order order = _unitOfWork.GetRepositoryInstance<Order>().GetFirstorDefault(orderId);
+        //[HttpPost, ActionName("DeleteOrders")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult OrdersConfirmed(int orderId)
+        //{
+        //    //Expression<Func<OrderDetail, bool>> expression = x => x.OrderId == orderId;
+        //    //OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefaultByParameter(expression);
+        //    OrderDetail orderDetail = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetFirstorDefault(orderId);
+        //    Order order = _unitOfWork.GetRepositoryInstance<Order>().GetFirstorDefault(orderId);
 
-            _unitOfWork.GetRepositoryInstance<Order>().Remove(order);
-            _unitOfWork.GetRepositoryInstance<OrderDetail>().Remove(orderDetail);
+        //    _unitOfWork.GetRepositoryInstance<Order>().Remove(order);
+        //    _unitOfWork.GetRepositoryInstance<OrderDetail>().Remove(orderDetail);
 
-            _unitOfWork.SaveChanges();
-            return RedirectToAction("Order");
-        }
+        //    _unitOfWork.SaveChanges();
+        //    return RedirectToAction("Order");
+        //}
 
         #endregion
 

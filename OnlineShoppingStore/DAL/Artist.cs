@@ -11,7 +11,8 @@ namespace OnlineShoppingStore.DAL
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Artist
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,9 +20,12 @@ namespace OnlineShoppingStore.DAL
         {
             this.Albums = new HashSet<Album>();
         }
-    
+        
         public int ArtistId { get; set; }
+        [Display(Name = "Artist Name")]
+        [Required(ErrorMessage = "An Artist Name is required")]
         public string Name { get; set; }
+
         public string Country { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

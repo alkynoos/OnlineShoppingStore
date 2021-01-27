@@ -54,7 +54,7 @@ namespace OnlineShoppingStore.Controllers
                 }
             }
             CartSinolo();
-            return RedirectToAction("Index", "Home"); // this needs review
+            return RedirectToAction("Index", "PartialView"); 
         }
         public ActionResult Remove(int id)
         {

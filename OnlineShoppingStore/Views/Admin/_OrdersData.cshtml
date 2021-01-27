@@ -109,7 +109,7 @@
                         @if (item.OrderComplete == false)
                         {
                             @Html.ActionLink("Completed", "OrdersComplete", new { orderId = item.OrderId }, new { @class = "btn btn-success" })
-                            @Html.ActionLink("Cancel", "DeleteOrders", new { orderId = item.OrderId }, new { @class = "btn btn-danger" })
+                            @*@Html.ActionLink("Cancel", "DeleteOrders", new { orderId = item.OrderId }, new { @class = "btn btn-danger" })*@
 
                         }
                         else

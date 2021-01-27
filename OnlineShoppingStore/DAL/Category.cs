@@ -11,7 +11,10 @@ namespace OnlineShoppingStore.DAL
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
     public partial class Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,8 +22,11 @@ namespace OnlineShoppingStore.DAL
         {
             this.Products = new HashSet<Product>();
         }
-    
+
+        
         public int CategoryId { get; set; }
+        [Display(Name = "Category")]    
+        [Required (ErrorMessage = "An Category Name is required")]
         public string CategoryName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

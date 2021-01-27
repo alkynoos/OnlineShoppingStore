@@ -7,7 +7,7 @@
 
 @using OnlineShoppingStore.DAL;
 @using OnlineShoppingStore.Models.Home;
-<h2>Index</h2>
+<h2>Ready to checkout!!</h2>
 
 <!DOCTYPE html>
 
@@ -27,7 +27,7 @@
     }
     else
     {
-        <h3>Cart Page</h3>
+        <h3>What we got here?</h3>
 
         <table id="cartProducts" cellpadding="2" cellspacing="2" border="1">
             <tr>
@@ -44,10 +44,9 @@
             {
                 <tr>
 
-
-                    <td>@Html.ActionLink("x", "ShoppingCartItem", new { id = item.Product.ProductId }, new { @class = "btn btn-danger" })</td>
+                    <td><a class="btn btn-danger" href="@Url.Action("Remove", "ShoppingCartItem", new { id = item.Product.ProductId })"> x </a></td>
                     <td class="text-center">@item.Product.Category.CategoryName</td>
-                    
+
 
                     <td class="text-center"> @item.Product.Album.Artist.Name : @item.Product.Album.AlbumName</td>
                     <td class="text-center">@item.Product.Price €</td>
@@ -62,22 +61,22 @@
                 </tr>
 
             }
-        <tfoot>
-            <tr>
+            <tfoot>
+                <tr>
 
-                <td align="right" colspan="6">Total Bill </td>
+                    <td align="right" colspan="6">Total Bill </td>
 
-                <td>
-                    @{
-                        List<Item> cart = (List<Item>)Session["cart"];
-                        var total = cart.Sum(item => item.Product.Price * item.Quantity);
-                    }
+                    <td>
+                        @{
+                            List<Item> cart = (List<Item>)Session["cart"];
+                            var total = cart.Sum(item => item.Product.Price * item.Quantity);
+                        }
 
-                    <p style="margin-top:10px" align="center"> @total €</p>
+                        <p style="margin-top:10px" align="center"> @total €</p>
 
-                </td>
-            </tr>
-        </tfoot>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
         <br>
         <a class="btn btn-warning" href="@Url.Action("ClearCart", "ShoppingCartItem")">Clear Cart</a>

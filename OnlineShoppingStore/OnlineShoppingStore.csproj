@@ -194,7 +194,6 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PartialViewController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
-    <Compile Include="Controllers\QuickSearchProductsController.cs" />
     <Compile Include="Controllers\ShoppingCartItemController.cs" />
     <Compile Include="DAL\Album.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -256,7 +255,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ArtistDetails.cs" />
     <Compile Include="Models\CategoryDetail.cs" />
     <Compile Include="Models\Home\CartCount.cs" />
@@ -264,8 +262,6 @@
     <Compile Include="Models\Home\Item.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\ProductDetail.cs" />
-    <Compile Include="Models\ShippingDetailId .cs" />
     <Compile Include="Models\ViewModels\ProductViewModel.cs" />
     <Compile Include="PaypalConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -273,7 +269,6 @@
     <Compile Include="Repository\GenericUnitOfWork.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\AlbumArtist.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminStyle\css\sb-admin.css" />
@@ -1866,13 +1861,12 @@
     <Content Include="Views\Orders\CheckoutComplete.cshtml" />
     <Content Include="Views\Orders\Checkout.cshtml" />
     <Content Include="Views\Admin\Orders.cshtml" />
-    <Content Include="Views\Home\OurProducts.cshtml" />
     <Content Include="Views\Admin\_OrdersData.cshtml" />
-    <Content Include="Views\QuickSearchProducts\Index.cshtml" />
     <Content Include="Views\Shared\_Products.cshtml" />
     <Content Include="Views\PartialView\Index.cshtml" />
     <Content Include="Views\Admin\DeleteOrders.cshtml" />
     <Content Include="Views\Admin\OrdersComplete.cshtml" />
+    <Content Include="Views\Shared\_ProductsForHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

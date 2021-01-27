@@ -76,7 +76,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.OrderPlaced, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderPlaced, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(model => model.OrderPlaced, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.OrderPlaced, "", new { @class = "text-danger" })
             </div>
         </div>
